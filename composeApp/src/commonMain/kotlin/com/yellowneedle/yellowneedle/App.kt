@@ -48,20 +48,4 @@ fun App() {
     }
 }
 
-
-@Composable
-fun PdfViewer(pdfFile: String, modifier: Modifier = Modifier) {
-    AndroidView(
-        factory = { context ->
-            PDFView(context, null).apply {
-                fromFile(pdfFile)
-                    .enableSwipe(true)
-                    .swipeHorizontal(false)
-                    .enableDoubletap(true)
-                    .defaultPage(0)
-                    .load()
-            }
-        },
-        modifier = modifier
-    )
-}
+//hits android specific apis
