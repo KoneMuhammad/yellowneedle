@@ -1,7 +1,11 @@
 package com.yellowneedle.yellowneedle
 
 import com.yellowneedle.yellowneedle.data.GeminiMachineLearningClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.test.Test
 
 
@@ -18,8 +22,7 @@ object FakeGeminiMachineLearningClient {
 class GeminiMachineLearningClientTest {
 
     @Test
-    fun GeminiMachineLearningClient_GetResponse_ResponseSuccessfull() = runTest
-    {
+    fun GeminiMachineLearningClient_GetResponse_ResponseSuccessfull() = runTest {
 
     }
 }

@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("io.kotest") version "6.0.4"
+    id("com.google.devtools.ksp")
 }
 
 kotlin {
@@ -78,5 +80,7 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:0.8.0")
+    implementation("me.tatarka.inject:kotlin-inject-runtime:0.8.0")
 }
 
