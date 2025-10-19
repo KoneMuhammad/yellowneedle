@@ -1,6 +1,6 @@
 package com.yellowneedle.yellowneedle.data.client
 
-interface MachineLearningClient {
+expect open class MachineLearningClient {
 
     suspend fun getResponse(input: String): String
 }

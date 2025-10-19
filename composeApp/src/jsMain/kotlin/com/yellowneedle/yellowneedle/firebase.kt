@@ -18,4 +18,3 @@ val firebaseConfig = js("{ apiKey: '...', projectId: '...' }")
 val app = initializeApp(firebaseConfig)
 val ai = getAI(app)
 val model = ai.generativeModel("gemini-2.5-flash")
-}

@@ -1,7 +1,9 @@
 package com.yellowneedle.yellowneedle.data.client
 
+import me.tatarka.inject.annotations.Inject
+
 @Inject
-class GeminiMachineLearningClient(private val geminiVertex:): MachineLearningClient{
+actual class machineLearningClient (): MachineLearningClient{
     override suspend fun getResponse(input: String): String {
 
     }
