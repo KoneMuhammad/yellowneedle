@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     id("io.kotest") version "6.0.4"
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services") version "4.4.4" apply false
 }
 
 kotlin {
@@ -34,6 +35,11 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.android.pdf.viewer)
+            implementation(libs.firebase.bom)
+            implementation(libs.firebase.ai)
+        }
+        jsMain.dependencies {
+            implementation(npm("firebase", "11.0.0"))
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -44,9 +50,17 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation("me.tatarka.inject:kotlin-inject-runtime:0.8.0")
+
+
+
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.kotest.framework.engine)
+            implementation(libs.kotlinx.coroutines.test)
+
         }
     }
 }

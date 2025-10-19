@@ -1,4 +1,4 @@
-package com.yellowneedle.yellowneedle.data
+package com.yellowneedle.yellowneedle.data.client
 
 interface MachineLearningClient {
 

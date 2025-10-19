@@ -1,12 +1,14 @@
 package com.yellowneedle.yellowneedle
 
-import com.yellowneedle.yellowneedle.data.GeminiMachineLearningClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
+import com.yellowneedle.yellowneedle.data.source.ResponseDataSource
+import com.yellowneedle.yellowneedle.data.source.ResponseRemoteDataSource
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.core.test.testCoroutineScheduler
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.time.Duration.Companion.seconds
 
 
 object FakeGeminiMachineLearningClient {
@@ -16,13 +18,22 @@ object FakeGeminiMachineLearningClient {
 
        return "Resposne from Service Success"
     }
-//how to test suspend functions
-    //how to make test from inside out
+//how to make vals more readable
 }
-class GeminiMachineLearningClientTest {
+@ExperimentalCoroutinesApi
+class GeminiMachineLearningClientTest: FunSpec() {
+    init {
+        coroutineTestScope = true
+        test("GeminiMachineLearningClient_GetResponse_ResponseSuccessfull") {
 
-    @Test
-    fun GeminiMachineLearningClient_GetResponse_ResponseSuccessfull() = runTest {
-
+            launch {
+               val responseRemoteDataSource: ResponseDataSource =
+                   ResponseRemoteDataSource(FakeGeminiMachineLearningClient)
+                val result = ResponseRemoteDataSource("")
+                assertEquals(result, responseRemoteDataSource)
+            }
+            testCoroutineScheduler.advanceTimeBy(1.seconds.inWholeMilliseconds)
+        }
     }
+
 }
