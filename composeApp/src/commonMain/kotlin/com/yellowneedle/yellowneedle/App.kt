@@ -47,5 +47,3 @@ fun App() {
         }
     }
 }
-
-//hits android specific apis

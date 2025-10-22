@@ -10,6 +10,8 @@ plugins {
     id("io.kotest") version "6.0.4"
     id("com.google.devtools.ksp")
     id("com.google.gms.google-services") version "4.4.4" apply false
+    kotlin("plugin.serialization") version "1.9.0"
+
 }
 
 kotlin {
@@ -37,6 +39,13 @@ kotlin {
             implementation(libs.android.pdf.viewer)
             implementation(libs.firebase.bom)
             implementation(libs.firebase.ai)
+            implementation("io.ktor:ktor-client-core:3.3.1")
+            implementation(libs.kotlinx.serialization.core)
+            implementation(libs.core)
+            implementation(libs.serialization)
+
+
+
         }
         jsMain.dependencies {
             implementation(npm("firebase", "11.0.0"))
