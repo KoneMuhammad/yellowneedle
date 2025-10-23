@@ -18,6 +18,7 @@ kotestFrameworkEngine = "6.0.4"
 kotlin = "2.2.20"
 kotlinxCoroutinesTest = "1.10.2"
 kotlinxSerializationCore = "1.9.0"
+simpleXml = "2.7.1"
 
 [libraries]
 android-pdf-viewer = { module = "com.github.barteksc:android-pdf-viewer", version.ref = "androidPdfViewer" }
@@ -38,6 +39,7 @@ androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationCore" }
 serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "core" }
+simple-xml = { module = "org.simpleframework:simple-xml", version.ref = "simpleXml" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

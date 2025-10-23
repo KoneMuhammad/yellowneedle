@@ -43,8 +43,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.core)
             implementation(libs.core)
             implementation(libs.serialization)
-
-
+            implementation(libs.simple.xml)
 
         }
         jsMain.dependencies {
