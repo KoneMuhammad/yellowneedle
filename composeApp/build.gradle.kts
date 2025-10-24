@@ -46,6 +46,13 @@ kotlin {
             implementation(libs.simple.xml)
 
         }
+
+        androidUnitTest.dependencies {
+            implementation(kotlin("test-junit"))
+        }
+        androidInstrumentedTest.dependencies {
+            implementation(kotlin("test-junit"))
+        }
         jsMain.dependencies {
             implementation(npm("firebase", "11.0.0"))
         }
@@ -83,6 +90,8 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
     packaging {
         resources {

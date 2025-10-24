@@ -1,4 +1,4 @@
-package com.yellowneedle.yellowneedle.data.source
+package com.yellowneedle.yellowneedle.data.dto
 
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList

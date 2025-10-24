@@ -1,49 +1,84 @@
 package com.yellowneedle.yellowneedle.data.source
 
+import com.yellowneedle.yellowneedle.data.dto.ArxivFeed
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import org.simpleframework.xml.core.Persister
 
-class KtorHTTPClient {
+class KtorArxivClient: KtorClient {
 
     private val client = HttpClient()
     private val serializer = Persister()
 
-    private suspend fun getArxivFeed(query: String, start: Int, maxResults: Int): ArxivFeed {
-
+    override suspend fun <T> get(
+        query: String,
+        start: Int,
+        maxResults: Int,
+        parser: (String) -> T
+    ): T {
         val response: HttpResponse =
             client.get("http://export.arxiv.org/api/query?search_query=$query&start=$start&max_results=$maxResults")
         val xmlString: String = response.bodyAsText()
-        val feed = serializer.read(ArxivFeed::class.java, xmlString)
-        return feed
+        return parser(xmlString) // parser handles turning XML into T
     }
 
     suspend fun getFeedSearchByTitle(title: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("ti:$title", start, maxResults)
+        get("ti:$title", start, maxResults){
+                xml ->
+            serializer.read(ArxivFeed::class.java, xml)
+        }
+
 
     suspend fun getFeedSearchByAuthor(author: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("au:$author", start, maxResults)
+        get("au:$author", start, maxResults){
+                xml ->
+            serializer.read(ArxivFeed::class.java, xml)
+        }
 
     suspend fun getFeedSearchByAbstract(abs: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("abs:$abs", start, maxResults)
+        get("abs:$abs", start, maxResults){
+                xml ->
+            serializer.read(ArxivFeed::class.java, xml)
+        }
 
     suspend fun getFeedSearchByComment(comment: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("co:$comment", start, maxResults)
+        get("co:$comment", start, maxResults){
+                xml ->
+            serializer.read(ArxivFeed::class.java, xml)
+        }
 
     suspend fun getFeedSearchByJournal(journal: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("jr:$journal", start, maxResults)
+        get("jr:$journal", start, maxResults){
+                xml ->
+            serializer.read(ArxivFeed::class.java, xml)
+        }
 
     suspend fun getFeedSearchByCategory(cat: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("cat:$cat", start, maxResults)
+        get("cat:$cat", start, maxResults){
+                xml ->
+            serializer.read(ArxivFeed::class.java, xml)
+        }
 
     suspend fun getFeedSearchByReportNumber(rn: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("rn:$rn", start, maxResults)
+        get("rn:$rn", start, maxResults){
+                xml ->
+            serializer.read(ArxivFeed::class.java, xml)
+        }
 
     suspend fun getFeedSearchById(id: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("id:$id", start, maxResults)
+        get("id:$id", start, maxResults){
+                xml ->
+            serializer.read(ArxivFeed::class.java, xml)
+        }
 
     suspend fun getFeedSearchAll(query: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("all:$query", start, maxResults)
+        get("all:$query", start, maxResults){
+                xml ->
+            serializer.read(ArxivFeed::class.java, xml)
+        }
+
+
+
 }
