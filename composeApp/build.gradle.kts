@@ -11,6 +11,8 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.gms.google-services") version "4.4.4" apply false
     kotlin("plugin.serialization") version "1.9.0"
+    id("com.google.dagger.hilt.android") version "2.57.1" apply false
+
 
 }
 
@@ -44,6 +46,7 @@ kotlin {
             implementation(libs.core)
             implementation(libs.serialization)
             implementation(libs.simple.xml)
+            implementation(libs.hilt.android)
 
         }
 
@@ -65,11 +68,6 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation("me.tatarka.inject:kotlin-inject-runtime:0.8.0")
-
-
-
-
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -111,7 +109,6 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
-    ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:0.8.0")
-    implementation("me.tatarka.inject:kotlin-inject-runtime:0.8.0")
+    ksp ("com.google.dagger:hilt-compiler:2.57.1")
 }
 

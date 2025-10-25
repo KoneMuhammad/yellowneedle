@@ -2,20 +2,16 @@ package com.yellowneedle.yellowneedle.data.source
 
 import com.yellowneedle.yellowneedle.data.dto.ArxivFeed
 
-interface KtorClient {
+interface ArxivFeedDataSource {
 
-    suspend fun <T> get(
+    suspend fun getArxivFeed(
         query: String,
         start: Int,
         maxResults: Int,
-        parser: (String) -> T
-    ): T
+    ): ArxivFeed
 }
 
-fun <T> defaultKtorClient(xyz:(String) -> T) {
-    val temp = "doa"
-    xyz(temp)
-}
+
 
 
 
