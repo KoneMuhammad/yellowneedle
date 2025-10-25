@@ -1,5 +1,8 @@
 package com.yellowneedle.yellowneedle.data.dependancyinjection
 
+import com.yellowneedle.yellowneedle.data.dto.ArxivFeed
+import com.yellowneedle.yellowneedle.data.repository.ArxivFeedNetworkRepository
+import com.yellowneedle.yellowneedle.data.repository.ArxivFeedRepository
 import com.yellowneedle.yellowneedle.data.source.ArxivFeedClient
 import com.yellowneedle.yellowneedle.data.source.ArxivFeedKtorClient
 import dagger.Binds
@@ -27,4 +30,11 @@ abstract class DataSourceModule {
 
     @Binds
     abstract fun bindArxivFeedClientToKtor(impl: ArxivFeedKtorClient): ArxivFeedClient
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+
+    abstract fun bindArxivFeedRepositorytoArxivFeedNetworkRepository(repository: ArxivFeedNetworkRepository): ArxivFeedRepository
 }

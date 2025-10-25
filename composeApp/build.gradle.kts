@@ -47,7 +47,7 @@ kotlin {
             implementation(libs.serialization)
             implementation(libs.simple.xml)
             implementation(libs.hilt.android)
-
+            implementation(libs.androidx.hilt.navigation.compose)
         }
 
         androidUnitTest.dependencies {

@@ -18,5 +18,4 @@ class ArxivFeedKtorClient@Inject constructor(val client: HttpClient): ArxivFeedC
             val xmlString: String = response.bodyAsText()
             return parser(xmlString) // parser handles turning XML into T
     }
-
 }
