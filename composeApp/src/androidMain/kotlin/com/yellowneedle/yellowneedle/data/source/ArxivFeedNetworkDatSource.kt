@@ -16,9 +16,8 @@ class ArxivFeedNetworkDatSource @Inject constructor(private val client: ArxivFee
         query: String,
         start: Int,
         maxResults: Int,
-    ): ArrayList<ArxivFeed> = client.get(query, start, maxResults) { xml ->
-        val arxivFeed: Array<ArxivFeed> = serializer.read(Array<ArxivFeed>::class.java, xml)
-        ArrayList(arxivFeed.toList())
+    ): ArxivFeed = client.get(query, start, maxResults) { xml ->
+        serializer.read(ArxivFeed::class.java, xml)
     }
 
     suspend fun getFeedSearchByTitle(title: String, start: Int = 0, maxResults: Int = 10) =

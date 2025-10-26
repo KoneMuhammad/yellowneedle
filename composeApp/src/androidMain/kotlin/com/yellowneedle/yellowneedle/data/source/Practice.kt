@@ -1,8 +1,7 @@
 package com.yellowneedle.yellowneedle.data.source
 
-class Family {
+val array = ArrayDeque<String>()
 
-    fun xyz(){
-        println("sicksick")
-    }
-}
+class ArxivAuthor(
+    val something : Int, val somethingelse: List<String>
+)

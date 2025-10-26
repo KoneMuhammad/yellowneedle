@@ -8,7 +8,7 @@ interface ArxivFeedDataSource {
         query: String,
         start: Int,
         maxResults: Int,
-    ): ArrayList<ArxivFeed>
+    ): ArxivFeed
 }
 
 
