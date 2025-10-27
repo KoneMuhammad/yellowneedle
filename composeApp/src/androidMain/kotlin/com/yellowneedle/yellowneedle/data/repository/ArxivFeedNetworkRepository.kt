@@ -11,7 +11,7 @@ class ArxivFeedNetworkRepository @Inject constructor(private val networkDatSourc
         query: String,
         start: Int,
         maxResults: Int
-    ): ArrayList<ArxivFeed> =
+    ): ArxivFeed =
         networkDatSource.getFeedSearchByTitle(query, start, maxResults)
 
     override suspend fun getFeedSearchByAuthor(

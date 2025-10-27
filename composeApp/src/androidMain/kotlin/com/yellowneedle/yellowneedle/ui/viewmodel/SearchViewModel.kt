@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.launch
 
-data class SearchResultsUiState(val results: ArrayList<ArxivFeed> = ArrayList(), var error: String = "")
+data class SearchResultsUiState(val results: ArxivFeed = ArxivFeed(), var error: String = "")
 
 @HiltViewModel
 class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivFeedRepository): ViewModel() {
