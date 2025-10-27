@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
+import com.yellowneedle.yellowneedle.ui.viewmodel.SearchArticleBar
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,30 +16,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            App()
+            SearchArticleBar(
+                onQueryChange = TODO(),
+                query = TODO(),
+                onSearch = TODO(),
+                expanded = TODO(),
+                onExpandedChange = TODO()
+            )
         }
     }
 }
 
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    App()
-}
-
-@Composable
-fun PdfViewer(pdfFile: String, modifier: Modifier = Modifier) {
-    AndroidView(
-        factory = { context ->
-            PDFView(context, null).apply {
-                fromFile(pdfFile)
-                    .enableSwipe(true)
-                    .swipeHorizontal(false)
-                    .enableDoubletap(true)
-                    .defaultPage(0)
-                    .load()
-            }
-        },
-        modifier = modifier
-    )
-}
