@@ -1,4 +1,4 @@
-package com.yellowneedle.yellowneedle.ui.viewmodel
+package com.yellowneedle.yellowneedle.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.yellowneedle.yellowneedle.data.dto.ArxivEntry
 import com.yellowneedle.yellowneedle.data.dto.ArxivFeed
+import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
 
 /**
  * image of paper on the left like reference image
@@ -30,16 +31,19 @@ import com.yellowneedle.yellowneedle.data.dto.ArxivFeed
  */
 @Composable
 fun SearchScreenRoute(
-     viewmodel : SearchViewModel = hiltViewModel()){
+     viewmodel : SearchViewModel = hiltViewModel())
+{
     var userSearchText by remember { mutableStateOf("")}
+    var expanded by remember { mutableStateOf(false) }
+
 
 SearchScreenLayout(
     arxivFeed = viewmodel.uistate.value.results,
     onQueryChange = {userText -> userSearchText = userText },
     query = userSearchText,
     onSearch = {userSearchText -> viewmodel.getArxivFeedByTitle(userSearchText, start = 0,maxResults = 10,)},
-    expanded = true
-) { }
+    expanded = expanded,
+) { newExpanded -> expanded = newExpanded  }
 }
 
 
