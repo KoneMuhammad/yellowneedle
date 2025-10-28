@@ -18,14 +18,14 @@ class ArxivFeedNetworkRepository @Inject constructor(private val networkDatSourc
         query: String,
         start: Int,
         maxResults: Int
-    ): ArrayList<ArxivFeed> =
+    ): ArxivFeed =
         networkDatSource.getFeedSearchByAuthor(query, start, maxResults)
 
     override suspend fun getFeedSearchByAbstract(
         query: String,
         start: Int,
         maxResults: Int
-    ): ArrayList<ArxivFeed> =
+    ): ArxivFeed =
         networkDatSource.getFeedSearchByAbstract(query, start, maxResults)
 
 
@@ -33,14 +33,14 @@ class ArxivFeedNetworkRepository @Inject constructor(private val networkDatSourc
         query: String,
         start: Int,
         maxResults: Int
-    ): ArrayList<ArxivFeed> =
+    ): ArxivFeed =
         networkDatSource.getFeedSearchByComment(query, start, maxResults)
 
     override suspend fun getFeedSearchByJournal(
         query: String,
         start: Int,
         maxResults: Int
-    ): ArrayList<ArxivFeed> =
+    ): ArxivFeed =
         networkDatSource.getFeedSearchByJournal(query, start, maxResults)
 
 
@@ -48,7 +48,7 @@ class ArxivFeedNetworkRepository @Inject constructor(private val networkDatSourc
         query: String,
         start: Int,
         maxResults: Int
-    ): ArrayList<ArxivFeed> =
+    ): ArxivFeed =
         networkDatSource.getFeedSearchByCategory(query, start, maxResults)
 
 
@@ -56,7 +56,7 @@ class ArxivFeedNetworkRepository @Inject constructor(private val networkDatSourc
         query: String,
         start: Int,
         maxResults: Int
-    ): ArrayList<ArxivFeed> =
+    ): ArxivFeed =
         networkDatSource.getFeedSearchByReportNumber(query, start, maxResults)
 
 
@@ -64,7 +64,7 @@ class ArxivFeedNetworkRepository @Inject constructor(private val networkDatSourc
         query: String,
         start: Int,
         maxResults: Int
-    ): ArrayList<ArxivFeed> =
+    ): ArxivFeed =
         networkDatSource.getFeedSearchById(query, start, maxResults)
 
 
@@ -72,7 +72,7 @@ class ArxivFeedNetworkRepository @Inject constructor(private val networkDatSourc
         query: String,
         start: Int,
         maxResults: Int
-    ): ArrayList<ArxivFeed> =
+    ): ArxivFeed =
         networkDatSource.getFeedSearchAll(query, start, maxResults)
 
 }

@@ -19,6 +19,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import yellowneedle.composeapp.generated.resources.Res
 import yellowneedle.composeapp.generated.resources.compose_multiplatform
 
+/**
 @Composable
 @Preview
 fun App() {
@@ -47,3 +48,6 @@ fun App() {
         }
     }
 }
+
+
+ **/

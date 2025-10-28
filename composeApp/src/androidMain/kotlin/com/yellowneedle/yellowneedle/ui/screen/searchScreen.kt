@@ -25,9 +25,8 @@ import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
 /**
  * image of paper on the left like reference image
  *check eberuthing that the route screen has inside of it
- * ui on click + side effects
- * user input determine the start and the max result
- * user inpu
+ *SEARCH BY -TITLE,AUTHOR ETC
+ *
  */
 @Composable
 fun SearchScreenRoute(
@@ -41,7 +40,7 @@ SearchScreenLayout(
     arxivFeed = viewmodel.uistate.value.results,
     onQueryChange = {userText -> userSearchText = userText },
     query = userSearchText,
-    onSearch = {userSearchText -> viewmodel.getArxivFeedByTitle(userSearchText, start = 0,maxResults = 10,)},
+    onSearch = {userSearchText -> viewmodel.getFeedSearchByTitle(userSearchText, start = 0,maxResults = 10,)},
     expanded = expanded,
 ) { newExpanded -> expanded = newExpanded  }
 }

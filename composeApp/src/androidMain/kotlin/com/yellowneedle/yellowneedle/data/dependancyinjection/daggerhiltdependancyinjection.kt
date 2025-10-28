@@ -11,6 +11,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
 import jakarta.inject.Singleton
 
 @Module
@@ -20,7 +21,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideKtorApiClient(): HttpClient {
-        return HttpClient()
+        return HttpClient(OkHttp) {}
     }
 }
 
@@ -36,5 +37,6 @@ abstract class DataSourceModule {
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
+    @Binds
     abstract fun bindArxivFeedRepositorytoArxivFeedNetworkRepository(repository: ArxivFeedNetworkRepository): ArxivFeedRepository
 }

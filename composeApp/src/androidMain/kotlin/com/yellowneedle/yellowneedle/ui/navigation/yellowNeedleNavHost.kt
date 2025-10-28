@@ -7,12 +7,11 @@ import androidx.navigation.compose.rememberNavController
 import com.yellowneedle.yellowneedle.ui.screen.SearchScreenRoute
 
 @Composable
-fun yellowNeedleNavHost(){
-    val navcontroller = rememberNavController()
-    NavHost(navcontroller, startDestination = "SearchScreenRoute") {
-        composable("SearchScreenRoute") {
+fun YellowNeedleNavHost(){
+    val navController = rememberNavController()
+    NavHost(navController, startDestination = SearchDestination.route) {
+        composable(SearchDestination.route) {
             SearchScreenRoute()
-
         }
     }
 }

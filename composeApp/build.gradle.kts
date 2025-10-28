@@ -9,10 +9,8 @@ plugins {
     alias(libs.plugins.composeCompiler)
     id("io.kotest") version "6.0.4"
     id("com.google.devtools.ksp")
-    id("com.google.gms.google-services") version "4.4.4" apply false
     kotlin("plugin.serialization") version "1.9.0"
-    id("com.google.dagger.hilt.android") version "2.57.1" apply false
-
+    id("com.google.dagger.hilt.android")
 
 }
 
@@ -38,9 +36,6 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.android.pdf.viewer)
-            implementation(libs.firebase.bom)
-            implementation(libs.firebase.ai)
             implementation("io.ktor:ktor-client-core:3.3.1")
             implementation(libs.kotlinx.serialization.core)
             implementation(libs.core)
@@ -48,6 +43,8 @@ kotlin {
             implementation(libs.simple.xml)
             implementation(libs.hilt.android)
             implementation(libs.androidx.hilt.navigation.compose)
+            implementation(libs.ktor.client.okhttp)
+
         }
 
         androidUnitTest.dependencies {
@@ -57,7 +54,7 @@ kotlin {
             implementation(kotlin("test-junit"))
         }
         jsMain.dependencies {
-            implementation(npm("firebase", "11.0.0"))
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
