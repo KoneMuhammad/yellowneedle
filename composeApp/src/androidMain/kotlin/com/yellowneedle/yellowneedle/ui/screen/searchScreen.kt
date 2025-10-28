@@ -22,10 +22,12 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.yellowneedle.yellowneedle.data.dto.ArxivEntry
 import com.yellowneedle.yellowneedle.data.dto.ArxivFeed
 import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
-import javax.annotation.Untainted
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.platform.LocalFocusManager
+import kotlinx.coroutines.launch
 
 /**
  * image of paper on the left like reference image
@@ -36,20 +38,21 @@ import androidx.compose.material3.Icon
 
 
 @Composable
-fun SearchScreenRoute(
-     viewmodel : SearchViewModel = hiltViewModel())
+fun SearchScreenRoute()
 {
+    val viewmodel : SearchViewModel = hiltViewModel()
     var userSearchText by remember { mutableStateOf("")}
     var expanded by remember { mutableStateOf(false) }
 
-    val allSuggestions = listOf("Kotlin", "Compose", "Android", "Jetpack", "Hilt", "Room")
-    var filteredSuggestions by remember { mutableStateOf(allSuggestions) }
+ val scope = rememberCoroutineScope()
 
 SearchScreenLayout(
     arxivFeed = viewmodel.uistate.value.results,
     onQueryChange = {userText -> userSearchText = userText },
     query = userSearchText,
-    onSearch = {userSearchText -> viewmodel.getFeedSearchByTitle(userSearchText, start = 0,maxResults = 10,)},
+    onSearch = {userSearchText -> scope.launch {viewmodel.getFeedSearchAll(userSearchText, start = 0,maxResults = 10,)}
+               expanded = false
+        },
     leadingIcon = {
         Icon(
             imageVector = Icons.Default.Search,
@@ -74,12 +77,12 @@ fun SearchScreenLayout(arxivFeed: ArxivFeed ,onQueryChange: (String) -> Unit, qu
             placeHolder = placeHolder,
             onExpandedChange = onExpandedChange
         )
-ArxivFeedList {arxivFeed}
+FeedLazyColumn {arxivFeed}
     }
 }
 
 @Composable
-fun ArxivFeedList(arxivFeed: ()-> ArxivFeed) {
+fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
     LazyColumn {
         items(arxivFeed().entries){
             paper ->
@@ -129,13 +132,12 @@ fun SearchArticleBar(onQueryChange: (String) -> Unit, query: String, onSearch: (
                 leadingIcon = leadingIcon,
                 placeholder = placeHolder,
                 onExpandedChange = onExpandedChange,
-                modifier = Modifier.fillMaxWidth(),
+
 
             )
         },
         expanded = expanded,
-        onExpandedChange = onExpandedChange,
-        modifier = Modifier.fillMaxWidth(),
+        onExpandedChange = onExpandedChange
     ) { }
 }
 

@@ -10,7 +10,10 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-data class SearchResultsUiState(val results: ArxivFeed = ArxivFeed(), var error: String = "")
+data class SearchResultsUiState(
+    val results: ArxivFeed = ArxivFeed(),
+    var error: String = ""
+)
 
 @HiltViewModel
 class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivFeedRepository): ViewModel() {
@@ -18,10 +21,10 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
     var uistate = mutableStateOf(SearchResultsUiState())
     private set
 
-    var coroutineLeash: Job? = null
+    var fetchJob: Job? = null
     fun getFeedSearchByTitle(query: String, start: Int, maxResults: Int) {
-        coroutineLeash?.cancel()
-        coroutineLeash = viewModelScope.launch {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
             try {
                 val arxivFeed = arxivFeedRepository.getFeedSearchByTitle(query, start, maxResults)
                 uistate.value = uistate.value.copy(
@@ -33,8 +36,8 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
     fun getFeedSearchByAuthor(query: String, start: Int, maxResults: Int) {
-        coroutineLeash?.cancel()
-        coroutineLeash = viewModelScope.launch {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
             try {
                 val arxivFeed = arxivFeedRepository.getFeedSearchByAuthor(query, start, maxResults)
                 uistate.value = uistate.value.copy(
@@ -46,8 +49,8 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
     fun getFeedSearchByAbstract(query: String, start: Int, maxResults: Int) {
-        coroutineLeash?.cancel()
-        coroutineLeash = viewModelScope.launch {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
             try {
                 val arxivFeed = arxivFeedRepository.getFeedSearchByAbstract(query, start, maxResults)
                 uistate.value = uistate.value.copy(
@@ -59,8 +62,8 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
     fun getFeedSearchByComment(query: String, start: Int, maxResults: Int) {
-        coroutineLeash?.cancel()
-        coroutineLeash = viewModelScope.launch {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
             try {
                 val arxivFeed = arxivFeedRepository.getFeedSearchByComment(query, start, maxResults)
                 uistate.value = uistate.value.copy(
@@ -72,8 +75,8 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
     fun getFeedSearchByJournal(query: String, start: Int, maxResults: Int) {
-        coroutineLeash?.cancel()
-        coroutineLeash = viewModelScope.launch {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
             try {
                 val arxivFeed = arxivFeedRepository.getFeedSearchByJournal(query, start, maxResults)
                 uistate.value = uistate.value.copy(
@@ -85,8 +88,8 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
     fun getFeedSearchByCategory(query: String, start: Int, maxResults: Int) {
-        coroutineLeash?.cancel()
-        coroutineLeash = viewModelScope.launch {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
             try {
                 val arxivFeed = arxivFeedRepository.getFeedSearchByCategory(query, start, maxResults)
                 uistate.value = uistate.value.copy(
@@ -98,8 +101,8 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
     fun getFeedSearchByReportNumber(query: String, start: Int, maxResults: Int) {
-        coroutineLeash?.cancel()
-        coroutineLeash = viewModelScope.launch {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
             try {
                 val arxivFeed = arxivFeedRepository.getFeedSearchByReportNumber(query, start, maxResults)
                 uistate.value = uistate.value.copy(
@@ -111,8 +114,8 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
     fun getFeedSearchById(query: String, start: Int, maxResults: Int) {
-        coroutineLeash?.cancel()
-        coroutineLeash = viewModelScope.launch {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
             try {
                 val arxivFeed = arxivFeedRepository.getFeedSearchById(query, start, maxResults)
                 uistate.value = uistate.value.copy(
@@ -124,8 +127,8 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
     fun getFeedSearchAll(query: String, start: Int, maxResults: Int) {
-        coroutineLeash?.cancel()
-        coroutineLeash = viewModelScope.launch {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
             try {
                 val arxivFeed = arxivFeedRepository.getFeedSearchAll(query, start, maxResults)
                 uistate.value = uistate.value.copy(
