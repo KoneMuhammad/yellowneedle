@@ -44,6 +44,10 @@ kotlin {
             implementation(libs.hilt.android)
             implementation(libs.androidx.hilt.navigation.compose)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.androidx.material.icons.extended)
+            implementation(compose.materialIconsExtended)
+
+
 
         }
 
