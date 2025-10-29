@@ -1,7 +1,9 @@
 package com.yellowneedle.yellowneedle.ui.screen
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicText
@@ -24,6 +26,7 @@ import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.rememberCoroutineScope
+import com.yellowneedle.yellowneedle.data.dto.ArxivAuthor
 import kotlinx.coroutines.launch
 
 /**
@@ -137,7 +140,23 @@ fun SearchArticleBar(onQueryChange: (String) -> Unit, query: String, onSearch: (
     ) { }
 }
 
-@Preview
+@Preview(showBackground = true, )
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun SearchScreenLayoutPreview() {
+fun FeedLazyColumnPreview() {
+    val sampleFeed = ArxivFeed(
+        title = "Sample Feed",
+        entries = mutableListOf(
+            ArxivEntry(title = "Paper 1", authors = mutableListOf(ArxivAuthor("hoha"))),
+            ArxivEntry(title = "Paper 2", authors = mutableListOf(ArxivAuthor("pow")))
+        )
+    )
+    LazyColumn(modifier = Modifier.fillMaxWidth()){
+        items(sampleFeed.entries){ entries ->
+            Text(entries.title?: "")
+            Text(entries.authors.joinToString(","){it.name ?: "Unknown"})
+
+        }
 }
+}
+
