@@ -38,9 +38,8 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun SearchScreenRoute()
+fun SearchScreenRoute( viewmodel : SearchViewModel = hiltViewModel())
 {
-    val viewmodel : SearchViewModel = hiltViewModel()
     var userSearchText by remember { mutableStateOf("")}
     var expanded by remember { mutableStateOf(false) }
 
@@ -50,7 +49,7 @@ SearchScreenLayout(
     arxivFeed = viewmodel.uistate.value.results,
     onQueryChange = {userText -> userSearchText = userText },
     query = userSearchText,
-    onSearch = {userSearchText -> scope.launch {viewmodel.getFeedSearchAll(userSearchText, start = 0,maxResults = 10,)}
+    onSearch = {string -> scope.launch {viewmodel.getFeedSearchAll(string, start = 0,maxResults = 10,)}
                expanded = false
         },
     leadingIcon = {
