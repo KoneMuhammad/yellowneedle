@@ -16,7 +16,7 @@ data class ArxivFeed(
     var updated: String? = null,
 
     @field:ElementList(inline = true, entry = "entry", required = false)
-    var entries: List<ArxivEntry> = emptyList()
+    var entries: MutableList<ArxivEntry> = mutableListOf()
 )
 
 @Root(name = "entry", strict = false)
@@ -28,13 +28,13 @@ data class ArxivEntry(
     @field:Element(name = "updated", required = false) var updated: String? = null,
 
     @field:ElementList(inline = true, entry = "author", required = false)
-    var authors: List<ArxivAuthor> = emptyList(),
+    var authors: MutableList<ArxivAuthor> = mutableListOf(),
 
     @field:ElementList(inline = true, entry = "link", required = false)
-    var links: List<ArxivLink> = emptyList(),
+    var links: MutableList<ArxivLink> = mutableListOf(),
 
     @field:ElementList(inline = true, entry = "category", required = false)
-    var categories: List<String> = emptyList()
+    var categories: MutableList<String> = mutableListOf()
 )
 
 @Root(name = "author", strict = false)
@@ -49,3 +49,4 @@ data class ArxivLink(
     @field:Element(name = "rel", required = false) var rel: String? = null,
     @field:Element(name = "type", required = false) var type: String? = null
 )
+

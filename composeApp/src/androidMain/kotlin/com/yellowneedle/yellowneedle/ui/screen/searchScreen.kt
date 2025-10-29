@@ -2,7 +2,6 @@ package com.yellowneedle.yellowneedle.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicText
@@ -25,8 +24,6 @@ import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.platform.LocalFocusManager
 import kotlinx.coroutines.launch
 
 /**
@@ -46,10 +43,10 @@ fun SearchScreenRoute( viewmodel : SearchViewModel = hiltViewModel())
  val scope = rememberCoroutineScope()
 
 SearchScreenLayout(
-    arxivFeed = viewmodel.uistate.value.results,
+    arxivFeed = viewmodel.uIState.value.results,
     onQueryChange = {userText -> userSearchText = userText },
     query = userSearchText,
-    onSearch = {string -> scope.launch {viewmodel.getFeedSearchAll(string, start = 0,maxResults = 10,)}
+    onSearch = {scope.launch {viewmodel.getFeedSearchAll(it, start = 0,maxResults = 10,)}
                expanded = false
         },
     leadingIcon = {

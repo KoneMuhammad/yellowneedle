@@ -49,6 +49,8 @@ kotlin {
 
 
 
+
+
         }
 
         androidUnitTest.dependencies {
@@ -109,6 +111,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
     debugImplementation(compose.uiTooling)
     ksp ("com.google.dagger:hilt-compiler:2.57.1")
 }

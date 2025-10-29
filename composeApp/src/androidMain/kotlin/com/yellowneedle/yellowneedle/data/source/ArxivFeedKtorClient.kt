@@ -14,7 +14,7 @@ class ArxivFeedKtorClient@Inject constructor(val client: HttpClient): ArxivFeedC
         parser: (String) -> T
     ): T {
             val response: HttpResponse =
-                client.get("http://export.arxiv.org/api/query?search_query=$query&start=$start&max_results=$maxResults")
+                client.get("https://export.arxiv.org/api/query?search_query=$query&start=$start&max_results=$maxResults")
             val xmlString: String = response.bodyAsText()
             return parser(xmlString) // parser handles turning XML into T
     }
