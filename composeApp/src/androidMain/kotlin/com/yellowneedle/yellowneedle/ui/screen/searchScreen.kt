@@ -1,9 +1,11 @@
 package com.yellowneedle.yellowneedle.ui.screen
 
 import android.content.res.Configuration
+import androidx.annotation.Size
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicText
@@ -26,16 +28,14 @@ import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.yellowneedle.yellowneedle.data.dto.ArxivAuthor
 import kotlinx.coroutines.launch
-
-/**
- * image of paper on the left like reference image
- *check eberuthing that the route screen has inside of it
- *SEARCH BY -TITLE,AUTHOR ETC
- *
- */
-
 
 @Composable
 fun SearchScreenRoute( viewmodel : SearchViewModel = hiltViewModel())
@@ -79,45 +79,6 @@ fun SearchScreenLayout(arxivFeed: ArxivFeed ,onQueryChange: (String) -> Unit, qu
 FeedLazyColumn {arxivFeed}
     }
 }
-
-@Composable
-fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
-    LazyColumn {
-        items(arxivFeed().entries){
-            paper ->
-            TitleText {paper}
-
-                AuthorNameText {paper }
-            }
-        }
-    }
-
-
-
-
-@Composable
-fun AuthorNameText(entry: () -> ArxivEntry) {
-    val names = entry().authors.joinToString(", ") { it.name ?: "Unknown" }
-    BasicText(text = names)
-
-}
-
-@Composable
-fun TitleText(entry: () -> ArxivEntry) {
-    BasicText(entry().title?: "title not found")
-}
-
-@Composable
-fun DatePublishedText(entry: () -> ArxivEntry) {
-    BasicText(entry().published?: "date not found")
-}
-
-
-    @Composable
-    fun BasicText(text: String) {
-        Text(text = text)
-    }
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchArticleBar(onQueryChange: (String) -> Unit, query: String, onSearch: (String) -> Unit, expanded: Boolean,leadingIcon: @Composable () -> Unit,placeHolder: @Composable () -> Unit,  onExpandedChange: (Boolean) -> Unit) {
@@ -133,12 +94,58 @@ fun SearchArticleBar(onQueryChange: (String) -> Unit, query: String, onSearch: (
                 onExpandedChange = onExpandedChange,
 
 
-            )
+                )
         },
         expanded = expanded,
         onExpandedChange = onExpandedChange
     ) { }
 }
+@Composable
+fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
+    LazyColumn {
+        items(arxivFeed().entries){
+            paper ->
+            TitleText {paper}
+
+                AuthorNameText {paper }
+            }
+        }
+    }
+
+@Composable
+fun AuthorNameText(entry: () -> ArxivEntry) {
+    val names = entry().authors.joinToString(", ") { it.name ?: "Unknown" }
+    BasicText(text = names)
+}
+@Composable
+fun TitleText(entry: () -> ArxivEntry) {
+    BasicText(entry().title?: "title not found")
+}
+
+@Composable
+fun DatePublishedText(entry: () -> ArxivEntry) {
+    BasicText(entry().published?: "date not found")
+}
+
+    @Composable
+    fun BasicText(text: String) {
+        Text(text = text)
+    }
+@Composable
+fun SearchScreenText(text: String,
+                     fontFamily: FontFamily,
+                     fontSize: TextUnit = TextUnit.Unspecified,
+                     fontWeight: FontWeight,
+                     color: Color = Color.Black,
+                     ) {
+    Text(text = text,
+        fontFamily = fontFamily,
+        fontSize = fontSize,
+        fontWeight = fontWeight,
+        color = color,)
+}
+
+
 
 @Preview(showBackground = true, )
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
@@ -147,16 +154,20 @@ fun FeedLazyColumnPreview() {
     val sampleFeed = ArxivFeed(
         title = "Sample Feed",
         entries = mutableListOf(
-            ArxivEntry(title = "Paper 1", authors = mutableListOf(ArxivAuthor("hoha"))),
-            ArxivEntry(title = "Paper 2", authors = mutableListOf(ArxivAuthor("pow")))
+            ArxivEntry(title = "machine learning for researchers",  published = "10.10.2025")
         )
     )
-    LazyColumn(modifier = Modifier.fillMaxWidth()){
+    LazyColumn(modifier = Modifier.fillMaxWidth().height(70.dp)){
         items(sampleFeed.entries){ entries ->
-            Text(entries.title?: "")
-            Text(entries.authors.joinToString(","){it.name ?: "Unknown"})
+            SearchScreenText(
+                entries.title ?: "",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+            )
+            Text(entries.published?: "")
 
         }
 }
 }
-
