@@ -1,29 +1,40 @@
 package com.yellowneedle.yellowneedle.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorScheme = darkColorScheme(
     primary = CalmGray,
     onPrimary = white,
     background = offBlack,
-    tertiary = OrangeDark,
     onBackground = white,
-    onSurface = White,
-    onTertiary = White,
-    onSurfaceVariant = Lightning
+    onSecondary = grey
 
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = CalmGray,          // button face
-    onPrimary = BlueDark,      // text/icon on blue button
+    onPrimary = black,      // text/icon on blue button
     background = offWhite,
     onBackground = black,
-    surface = White,
-    tertiary = Orange,
-    onSurface = DarkGray,
-    onTertiary = Black,
-    onSurfaceVariant = Lightning
+    onSecondary = grey
 )
+
+@Composable
+fun yellowNeedleTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colors = if (darkTheme) DarkColorScheme else LightColorScheme
+
+    MaterialTheme(
+        colorScheme = colors,
+        typography = YellowNeedleTypography,
+        content = content
+    )
+}

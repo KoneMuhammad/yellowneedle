@@ -2,6 +2,8 @@ package com.yellowneedle.yellowneedle.ui.screen
 
 import android.content.res.Configuration
 import androidx.annotation.Size
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,6 +32,7 @@ import com.yellowneedle.yellowneedle.data.dto.ArxivFeed
 import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -72,7 +75,7 @@ SearchScreenLayout(
 
 @Composable
 fun SearchScreenLayout(arxivFeed:() -> ArxivFeed ,onQueryChange: (String) -> Unit, query: String,onSearch: (String) -> Unit, expanded: Boolean, leadingIcon: @Composable () -> Unit,placeHolder: @Composable () -> Unit, onExpandedChange: (Boolean) -> Unit) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         SearchArticleBar(
             onQueryChange = onQueryChange,
             query = query,
@@ -117,7 +120,10 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(110.dp)) {
+                    .height(110.dp)
+                    .border(   width = 0.5.dp,
+                        color = Color(0xA4A9B8).copy(alpha = 1f))
+                ) {
                 SearchScreenText(
                     text = paper.title ?: "title not found",
                     fontFamily = FontFamily.SansSerif,
@@ -126,13 +132,12 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
                     textAlign = TextAlign.Center,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
-                Spacer(modifier = Modifier.size(10.dp))
+                Spacer(modifier = Modifier.weight(1f))
                 SearchScreenText(
                     text = paper.published ?: "title not found",
                     fontFamily = FontFamily.SansSerif,
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.End,
-                    color = Color.Black,
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier.align(Alignment.End)
                 )
             }
@@ -164,10 +169,12 @@ fun SearchScreenText(text: String,
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun FeedLazyColumnPreview() {
+
     val sampleFeed = ArxivFeed(
-        title = "Sample Feed",
         entries = mutableListOf(
-            ArxivEntry(title = "machine learning for researchers: the way of the land which should be ",  published = "published 10.10.2025")
+            ArxivEntry(title = "machine learning for researchers: its the way of the land which should be ",
+                published = "published 10.10.2025"), ArxivEntry(title = "machine learning for researchers: its the way of the land which should be ",
+                published = "published 10.10.2025")
         )
     )
     LazyColumn() {
@@ -176,6 +183,9 @@ fun FeedLazyColumnPreview() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(90.dp)
+                    .border(   width = 0.5.dp,
+                        color = Color(0xA4A9B8).copy(alpha = 1f),
+                        shape = MaterialTheme.shapes.small)
             ) {
                 SearchScreenText(
                     text = entries.title ?: "title not found",
@@ -185,7 +195,15 @@ fun FeedLazyColumnPreview() {
                     textAlign = TextAlign.Center,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
-                Spacer(modifier = Modifier.size(10.dp))
+                Spacer(modifier = Modifier.weight(1f))
+                SearchScreenText(
+                    text = entries.published ?: "title not found",
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 12.sp,
+                    color = Color.Gray,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.align(Alignment.End)
+                )
 
 
             }
