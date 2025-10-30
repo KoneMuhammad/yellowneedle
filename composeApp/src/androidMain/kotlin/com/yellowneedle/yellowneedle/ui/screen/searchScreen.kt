@@ -117,7 +117,7 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(90.dp)) {
+                    .height(110.dp)) {
                 SearchScreenText(
                     text = paper.title ?: "title not found",
                     fontFamily = FontFamily.SansSerif,
