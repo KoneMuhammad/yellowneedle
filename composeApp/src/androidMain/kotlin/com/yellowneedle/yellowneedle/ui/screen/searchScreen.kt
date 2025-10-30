@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -116,21 +117,23 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(70.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center) {
+                    .height(90.dp)) {
                 SearchScreenText(
                     text = paper.title ?: "title not found",
                     fontFamily = FontFamily.SansSerif,
-                    fontSize = 22.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
                 Spacer(modifier = Modifier.size(10.dp))
                 SearchScreenText(
                     text = paper.published ?: "title not found",
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 16.sp,
+                    textAlign = TextAlign.End,
                     color = Color.Black,
+                    modifier = Modifier.align(Alignment.End)
                 )
             }
         }
@@ -143,15 +146,16 @@ fun SearchScreenText(text: String,
                      fontFamily: FontFamily,
                      fontSize: TextUnit = TextUnit.Unspecified,
                      fontWeight: FontWeight? = null ,
-                     maxLines: Int = 2,
                      color: Color = Color.Black,
-                     ) {
+                     textAlign: TextAlign? = null,
+                     modifier: Modifier = Modifier) {
     Text(text = text,
         fontFamily = fontFamily,
         fontSize = fontSize,
         fontWeight = fontWeight,
-        maxLines = maxLines,
-        color = color,)
+        color = color,
+        textAlign = textAlign,
+        modifier = modifier)
 }
 
 
@@ -163,24 +167,28 @@ fun FeedLazyColumnPreview() {
     val sampleFeed = ArxivFeed(
         title = "Sample Feed",
         entries = mutableListOf(
-            ArxivEntry(title = "machine learning for researchers",  published = "published 10.10.2025")
+            ArxivEntry(title = "machine learning for researchers: the way of the land which should be ",  published = "published 10.10.2025")
         )
     )
-    LazyColumn(modifier = Modifier.fillMaxWidth().height(70.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center) {
+    LazyColumn() {
+        items(sampleFeed.entries) { entries ->
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(90.dp)
+            ) {
+                SearchScreenText(
+                    text = entries.title ?: "title not found",
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+                Spacer(modifier = Modifier.size(10.dp))
 
-        items(sampleFeed.entries){ entries ->
-            SearchScreenText(
-                entries.title ?: "",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Normal,
-                color = Color.Black,
-            )
-            Spacer(modifier = Modifier.size(10.dp))
-            Text(entries.published?: "")
 
+            }
         }
 }
 }
