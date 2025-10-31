@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,6 +48,7 @@ import com.yellowneedle.yellowneedle.ui.theme.YellowNeedleTheme
 import com.yellowneedle.yellowneedle.ui.theme.YellowNeedleTypography
 import io.ktor.sse.SPACE
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun SearchScreenRoute( viewmodel : SearchViewModel = hiltViewModel())
@@ -185,16 +187,20 @@ fun FeedLazyColumnPreview() {
         )
         LazyColumn() {
             items(sampleFeed.entries) { entries ->
-                Column(
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(90.dp)
+                        .height(96.dp)
                         .border(
                             width = 0.5.dp,
                             color = Color(0xA4A9B8).copy(alpha = 1f),
                             shape = MaterialTheme.shapes.small
                         )
                 ) {
+                    Icon(
+                        painter = painterResource(res.),
+                        contentDescription = "ARXIV Logo"
+                    )
                     SearchScreenText(
                         text = entries.title ?: "title not found",
                         fontFamily = FontFamily.SansSerif,
