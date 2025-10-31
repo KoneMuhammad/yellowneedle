@@ -43,6 +43,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yellowneedle.yellowneedle.data.dto.ArxivAuthor
+import com.yellowneedle.yellowneedle.ui.theme.YellowNeedleTheme
+import com.yellowneedle.yellowneedle.ui.theme.YellowNeedleTypography
 import io.ktor.sse.SPACE
 import kotlinx.coroutines.launch
 
@@ -166,48 +168,55 @@ fun SearchScreenText(text: String,
 
 
 @Preview(showBackground = true, )
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES,name = "Dark Mode")
 @Composable
 fun FeedLazyColumnPreview() {
-
-    val sampleFeed = ArxivFeed(
-        entries = mutableListOf(
-            ArxivEntry(title = "machine learning for researchers: its the way of the land which should be ",
-                published = "published 10.10.2025"), ArxivEntry(title = "machine learning for researchers: its the way of the land which should be ",
-                published = "published 10.10.2025")
+    YellowNeedleTheme {
+        val sampleFeed = ArxivFeed(
+            entries = mutableListOf(
+                ArxivEntry(
+                    title = "machine learning for researchers: its the way of the land which should be ",
+                    published = "published 10.10.2025"
+                ), ArxivEntry(
+                    title = "machine learning for researchers: its the way of the land which should be ",
+                    published = "published 10.10.2025"
+                )
+            )
         )
-    )
-    LazyColumn() {
-        items(sampleFeed.entries) { entries ->
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(90.dp)
-                    .border(   width = 0.5.dp,
-                        color = Color(0xA4A9B8).copy(alpha = 1f),
-                        shape = MaterialTheme.shapes.small)
-            ) {
-                SearchScreenText(
-                    text = entries.title ?: "title not found",
-                    fontFamily = FontFamily.SansSerif,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                SearchScreenText(
-                    text = entries.published ?: "title not found",
-                    fontFamily = FontFamily.SansSerif,
-                    fontSize = 12.sp,
-                    color = Color.Gray,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.align(Alignment.End)
-                )
+        LazyColumn() {
+            items(sampleFeed.entries) { entries ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(90.dp)
+                        .border(
+                            width = 0.5.dp,
+                            color = Color(0xA4A9B8).copy(alpha = 1f),
+                            shape = MaterialTheme.shapes.small
+                        )
+                ) {
+                    SearchScreenText(
+                        text = entries.title ?: "title not found",
+                        fontFamily = FontFamily.SansSerif,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    SearchScreenText(
+                        text = entries.published ?: "title not found",
+                        fontFamily = FontFamily.SansSerif,
+                        fontSize = 12.sp,
+                        color = Color.Gray,
+                        textAlign = TextAlign.End,
+                        modifier = Modifier.align(Alignment.End)
+                    )
 
 
+                }
             }
         }
-}
+    }
 }
 //clipped publish and not showing rest of entries
