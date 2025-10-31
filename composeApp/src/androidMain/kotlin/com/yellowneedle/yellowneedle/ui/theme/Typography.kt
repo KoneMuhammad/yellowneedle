@@ -6,11 +6,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 val YellowNeedleTypography = Typography(
-    displayLarge = TextStyle(fontSize = 57.sp, fontWeight = FontWeight.Normal, lineHeight = 64.sp, letterSpacing = (-0.25).sp),
-    displayMedium = TextStyle(fontSize = 45.sp, fontWeight = FontWeight.Normal, lineHeight = 52.sp, letterSpacing = 0.sp),
-    displaySmall = TextStyle(fontSize = 36.sp, fontWeight = FontWeight.Normal, lineHeight = 44.sp, letterSpacing = 0.sp),
+    titleLarge = TextStyle(fontSize = 40.sp, fontWeight = FontWeight.Normal, lineHeight = 64.sp, letterSpacing = 0.25.sp),
+    titleMedium = TextStyle(fontSize = 32.sp, fontWeight = FontWeight.Normal, lineHeight = 52.sp, letterSpacing = 0.25. sp),
 
-    bodyLarge = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.5.sp),
-    bodyMedium = TextStyle(fontSize = 17.sp, fontWeight = FontWeight.Medium, letterSpacing = 0.25.sp),
-    bodySmall = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.4.sp, ),
+    headlineLarge = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp),
+    headlineMedium = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp),
+    headlineSmall = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp),
+
+    bodyLarge = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp),
+    bodyMedium = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp),
+    bodySmall = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp),
 )
+
+//line height
