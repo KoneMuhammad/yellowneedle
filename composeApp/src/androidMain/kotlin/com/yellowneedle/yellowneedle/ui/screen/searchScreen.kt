@@ -37,6 +37,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -49,6 +50,8 @@ import com.yellowneedle.yellowneedle.ui.theme.YellowNeedleTypography
 import io.ktor.sse.SPACE
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import com.yellowneedle.yellowneedle.R
+
 
 @Composable
 fun SearchScreenRoute( viewmodel : SearchViewModel = hiltViewModel())
@@ -198,28 +201,29 @@ fun FeedLazyColumnPreview() {
                         )
                 ) {
                     Icon(
-                        painter = painterResource(res.),
-                        contentDescription = "ARXIV Logo"
+                        painter = painterResource(R.drawable.machinelearning), contentDescription = ""
                     )
-                    SearchScreenText(
-                        text = entries.title ?: "title not found",
-                        fontFamily = FontFamily.SansSerif,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Normal,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    SearchScreenText(
-                        text = entries.published ?: "title not found",
-                        fontFamily = FontFamily.SansSerif,
-                        fontSize = 12.sp,
-                        color = Color.Gray,
-                        textAlign = TextAlign.End,
-                        modifier = Modifier.align(Alignment.End)
-                    )
+                    Column(modifier = Modifier.weight(1f)) {
+                        SearchScreenText(
+                            text = entries.title ?: "title not found",
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        SearchScreenText(
+                            text = entries.published ?: "title not found",
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 12.sp,
+                            color = Color.Gray,
+                            textAlign = TextAlign.End,
+                            modifier = Modifier.align(Alignment.End)
+                        )
 
 
+                    }
                 }
             }
         }
