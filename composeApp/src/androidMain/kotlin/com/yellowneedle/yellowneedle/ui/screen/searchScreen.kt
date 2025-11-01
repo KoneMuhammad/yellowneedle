@@ -199,12 +199,16 @@ fun FeedLazyColumnPreview() {
                             width = 0.5.dp,
                             color = Color(0xA4A9B8).copy(alpha = 1f),
                             shape = MaterialTheme.shapes.small
-                        )
+                        ), verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(modifier = Modifier.height(44.dp).width(44.dp),
-                        painter = painterResource(R.drawable.searchicon), contentDescription = ""
+                    Spacer(modifier = Modifier.width(32.dp))
+                    Icon(modifier = Modifier.height(44.dp).width(44.dp).padding(22.dp),
+                        painter = painterResource(R.drawable.precision_manufacturing_24px), contentDescription = "",
+                        tint = MaterialTheme.colorScheme.onBackground
                     )
-                    Column(modifier = Modifier.weight(1f)) {
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Column() {
+                        Spacer(modifier = Modifier.width(26.dp))
                         SearchScreenText(
                             text = entries.title ?: "title not found",
                             fontFamily = FontFamily.SansSerif,
