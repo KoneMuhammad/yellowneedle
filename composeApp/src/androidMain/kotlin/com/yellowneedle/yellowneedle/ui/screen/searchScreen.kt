@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -39,6 +40,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -156,18 +158,10 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
 
 @Composable
 fun SearchScreenText(text: String,
-                     fontFamily: FontFamily,
-                     fontSize: TextUnit = TextUnit.Unspecified,
-                     fontWeight: FontWeight? = null ,
-                     color: Color = Color.Black,
-                     textAlign: TextAlign? = null,
+                     textStyle: TextStyle,
                      modifier: Modifier = Modifier) {
     Text(text = text,
-        fontFamily = fontFamily,
-        fontSize = fontSize,
-        fontWeight = fontWeight,
-        color = color,
-        textAlign = textAlign,
+        style = textStyle,
         modifier = modifier)
 }
 
@@ -202,29 +196,21 @@ fun FeedLazyColumnPreview() {
                         ), verticalAlignment = Alignment.CenterVertically
                 ) {
                     Spacer(modifier = Modifier.width(32.dp))
-                    Icon(modifier = Modifier.height(44.dp).width(44.dp).padding(22.dp),
+                    Icon(modifier = Modifier.size(44.dp).padding(11.dp),
                         painter = painterResource(R.drawable.precision_manufacturing_24px), contentDescription = "",
                         tint = MaterialTheme.colorScheme.onBackground
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Column() {
-                        Spacer(modifier = Modifier.width(26.dp))
+                        Spacer(modifier = Modifier.height(26.dp))
                         SearchScreenText(
                             text = entries.title ?: "title not found",
-                            fontFamily = FontFamily.SansSerif,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Normal,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                         textStyle = MaterialTheme.typography.headlineLarge
                         )
-                        Spacer(modifier = Modifier.weight(1f))
+                        Spacer(modifier = Modifier.height(8.dp))
                         SearchScreenText(
                             text = entries.published ?: "title not found",
-                            fontFamily = FontFamily.SansSerif,
-                            fontSize = 12.sp,
-                            color = Color.Gray,
-                            textAlign = TextAlign.End,
-                            modifier = Modifier.align(Alignment.End)
+                            textStyle = MaterialTheme.typography.bodyMedium
                         )
 
 
