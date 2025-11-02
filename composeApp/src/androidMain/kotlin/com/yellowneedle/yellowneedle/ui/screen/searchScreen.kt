@@ -128,24 +128,48 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
     LazyColumn(modifier = Modifier.fillMaxWidth())
     {
         items(arxivFeed().entries) { paper ->
-            Column(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(110.dp)
-                    .border(   width = 0.5.dp,
-                        color = Color(0xA4A9B8).copy(alpha = 1f))
-                ) {
-                SearchScreenText(
-                    text = paper.title ?: "title not found",
-                   textStyle = MaterialTheme.typography.headlineLarge
+                    .height(96.dp)
+                    .background(MaterialTheme.colorScheme.background)
+                    .border(
+                        width = 0.5.dp,
+                        color = MaterialTheme.colorScheme.onTertiary
+                    )) {
+                Spacer(modifier = Modifier.width(24.dp))
+
+                //icon should be based on categories conditional when
+                Icon(modifier = Modifier.height(48.dp).width(44.dp).padding(
+                    start = 11.dp, top = 13.dp, end = 11.dp, bottom = 13.dp).align(Alignment.CenterVertically),
+                    painter = painterResource(R.drawable.precision_manufacturing_24px), contentDescription = "",
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
-                Spacer(modifier = Modifier.weight(1f))
-                SearchScreenText(
-                    text = paper.published ?: "title not found",
-                   textStyle = MaterialTheme.typography.bodyMedium
-                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Column(modifier = Modifier.fillMaxHeight()) {
+                    Spacer(modifier = Modifier.height(24.dp))
+                    SearchScreenText(
+                        text = paper.title ?: "title not found",
+                        textStyle = MaterialTheme.typography.headlineLarge,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier.width(266.dp)
+
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    SearchScreenText(
+                        text = paper.published ?: "title not found",
+                        textStyle = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSecondary,
+                        modifier = Modifier.width(266.dp).align(Alignment.Start)
+
+                    )
+                }
+                Spacer(modifier = Modifier.width(24.dp))
+                Icon(modifier = Modifier.size(22.dp).align(Alignment.CenterVertically),
+                    painter = painterResource(R.drawable.arrow_forward_ios_24px), contentDescription = "",
+                    tint = MaterialTheme.colorScheme.onBackground)
             }
-        }
+            }
         }
     }
 
@@ -167,8 +191,8 @@ fun SearchScreenText(modifier: Modifier = Modifier,
 
 
 
-@Preview(showBackground = true, )
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES,name = "Dark Mode")
+@Preview(showBackground = true, widthDp = 411 )
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES,name = "Dark Mode",  widthDp = 411)
 @Composable
 fun FeedLazyColumnPreview() {
     YellowNeedleTheme {
@@ -207,7 +231,8 @@ fun FeedLazyColumnPreview() {
                         SearchScreenText(
                             text = entries.title ?: "title not found",
                          textStyle = MaterialTheme.typography.headlineLarge,
-                            color = MaterialTheme.colorScheme.onBackground
+                            color = MaterialTheme.colorScheme.onBackground,
+                            modifier = Modifier.width(266.dp)
 
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -215,12 +240,14 @@ fun FeedLazyColumnPreview() {
                             text = entries.published ?: "title not found",
                             textStyle = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSecondary,
-                                    modifier = Modifier.align(Alignment.Start)
+                                    modifier = Modifier.width(266.dp).align(Alignment.Start)
 
                         )
-
-
                     }
+                    Spacer(modifier = Modifier.width(24.dp))
+                    Icon(modifier = Modifier.size(22.dp).align(Alignment.CenterVertically),
+                        painter = painterResource(R.drawable.arrow_forward_ios_24px), contentDescription = "",
+                        tint = MaterialTheme.colorScheme.onBackground)
                 }
             }
         }
