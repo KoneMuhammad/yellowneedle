@@ -154,7 +154,7 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
 fun SearchScreenText(modifier: Modifier = Modifier,
                      text: String,
                      textStyle: TextStyle,
-                     color: Color = MaterialTheme.colorScheme.onBackground,
+                     color: Color =  Color.Unspecified,
                      maxLines: Int = 1,
                      ) {
     Text(modifier = modifier,
@@ -206,15 +206,17 @@ fun FeedLazyColumnPreview() {
                         Spacer(modifier = Modifier.height(24.dp))
                         SearchScreenText(
                             text = entries.title ?: "title not found",
-                         textStyle = MaterialTheme.typography.headlineLarge
-                            //max lines 1
-                            //color
+                         textStyle = MaterialTheme.typography.headlineLarge,
+                            color = MaterialTheme.colorScheme.onBackground
+
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         SearchScreenText(
                             text = entries.published ?: "title not found",
                             textStyle = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.align(Alignment.Start)
+                            color = MaterialTheme.colorScheme.onSecondary,
+                                    modifier = Modifier.align(Alignment.Start)
+
                         )
 
 
