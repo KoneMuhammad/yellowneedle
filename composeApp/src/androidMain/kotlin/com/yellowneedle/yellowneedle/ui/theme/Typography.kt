@@ -11,13 +11,13 @@ val YellowNeedleTypography = Typography(
     titleLarge = TextStyle(fontSize = 40.sp, fontWeight = FontWeight.Normal, lineHeight = 64.sp, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif),
     titleMedium = TextStyle(fontSize = 32.sp, fontWeight = FontWeight.Normal, lineHeight = 52.sp, letterSpacing = 0.25. sp, fontFamily = FontFamily.SansSerif),
 
-    headlineLarge = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif,color = ),
-    headlineMedium = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif,color = ),
-    headlineSmall = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif, color = ),
+    headlineLarge = TextStyle(fontSize = 26.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif),
+    headlineMedium = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif),
+    headlineSmall = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif),
 
-    bodyLarge = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif,color = ),
-    bodyMedium = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif,color = ),
-    bodySmall = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif,color = ),
+    bodyLarge = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif),
+    bodyMedium = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif),
+    bodySmall = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif),
 )
 
 //line height

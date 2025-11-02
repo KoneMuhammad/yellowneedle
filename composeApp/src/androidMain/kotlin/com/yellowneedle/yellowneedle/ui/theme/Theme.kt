@@ -9,20 +9,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorScheme = darkColorScheme(
-    primary = CalmGray,
-    onPrimary = white,
     background = offBlack,
-    onBackground = white,
-    onSecondary = grey
+    onBackground = whiteText,
+    onSecondary = grayText,
+    onTertiary = strokeBlack
 
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = CalmGray,          // button face
-    onPrimary = black,      // text/icon on blue button
     background = offWhite,
-    onBackground = black,
-    onSecondary = grey
+    onBackground = blackText,
+    onSecondary = grayText,
+    onTertiary = strokeWhite
 )
 
 @Composable

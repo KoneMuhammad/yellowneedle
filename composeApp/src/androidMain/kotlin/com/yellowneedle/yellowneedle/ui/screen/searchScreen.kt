@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -136,19 +137,12 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
                 ) {
                 SearchScreenText(
                     text = paper.title ?: "title not found",
-                    fontFamily = FontFamily.SansSerif,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                   textStyle = MaterialTheme.typography.headlineLarge
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 SearchScreenText(
                     text = paper.published ?: "title not found",
-                    fontFamily = FontFamily.SansSerif,
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.onSecondary,
-                    modifier = Modifier.align(Alignment.End)
+                   textStyle = MaterialTheme.typography.bodyMedium
                 )
             }
         }
@@ -157,12 +151,18 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
 
 
 @Composable
-fun SearchScreenText(text: String,
+fun SearchScreenText(modifier: Modifier = Modifier,
+                     text: String,
                      textStyle: TextStyle,
-                     modifier: Modifier = Modifier) {
-    Text(text = text,
+                     color: Color = MaterialTheme.colorScheme.onBackground,
+                     maxLines: Int = 1,
+                     ) {
+    Text(modifier = modifier,
+        text = text,
         style = textStyle,
-        modifier = modifier)
+        color = color,
+        maxLines = maxLines,
+        )
 }
 
 
@@ -189,28 +189,32 @@ fun FeedLazyColumnPreview() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(96.dp)
+                        .background(MaterialTheme.colorScheme.background)
                         .border(
                             width = 0.5.dp,
-                            color = Color(0xA4A9B8).copy(alpha = 1f),
-                            shape = MaterialTheme.shapes.small
-                        ), verticalAlignment = Alignment.CenterVertically
+                            color = MaterialTheme.colorScheme.onTertiary
+                        ),
                 ) {
-                    Spacer(modifier = Modifier.width(32.dp))
-                    Icon(modifier = Modifier.size(44.dp).padding(11.dp),
+                    Spacer(modifier = Modifier.width(24.dp))
+                    Icon(modifier = Modifier.height(48.dp).width(44.dp).padding(
+                        start = 11.dp, top = 13.dp, end = 11.dp, bottom = 13.dp).align(Alignment.CenterVertically),
                         painter = painterResource(R.drawable.precision_manufacturing_24px), contentDescription = "",
                         tint = MaterialTheme.colorScheme.onBackground
                     )
                     Spacer(modifier = Modifier.width(16.dp))
-                    Column() {
-                        Spacer(modifier = Modifier.height(26.dp))
+                    Column(modifier = Modifier.fillMaxHeight()) {
+                        Spacer(modifier = Modifier.height(24.dp))
                         SearchScreenText(
                             text = entries.title ?: "title not found",
                          textStyle = MaterialTheme.typography.headlineLarge
+                            //max lines 1
+                            //color
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         SearchScreenText(
                             text = entries.published ?: "title not found",
-                            textStyle = MaterialTheme.typography.bodyMedium
+                            textStyle = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.align(Alignment.Start)
                         )
 
 
