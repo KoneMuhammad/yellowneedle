@@ -13,3 +13,5 @@ val grayText  = Color(0x888A8C).copy(alpha = 1f)
 
 val strokeWhite = Color(0xDBE6FF).copy(alpha = 1f)
 val strokeBlack = Color(0x607594).copy(alpha = 1f)
+
+val bigCardShadow = Color(0xECEEF2).copy(alpha = 1f)

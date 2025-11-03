@@ -20,7 +20,8 @@ private val LightColorScheme = lightColorScheme(
     background = offWhite,
     onBackground = blackText,
     onSecondary = grayText,
-    onTertiary = strokeWhite
+    onTertiary = strokeWhite,
+
 )
 
 @Composable
