@@ -41,6 +41,7 @@ import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clipToBounds
@@ -70,7 +71,6 @@ fun SearchScreenRoute( viewmodel : SearchViewModel = hiltViewModel())
     var userSearchText by remember { mutableStateOf("")}
     var expanded by remember { mutableStateOf(false) }
 
-    var isMarqueeOn by remember { mutableStateOf(false) }
 
 
  val scope = rememberCoroutineScope()
@@ -108,7 +108,7 @@ fun SearchScreenLayout(arxivFeed:() -> ArxivFeed ,onQueryChange: (String) -> Uni
         )
         Spacer(Modifier.height(20.dp))
 FeedLazyColumn(
-    arxivFeed = arxivFeed
+    arxivFeed = arxivFeed,
 )
     }
 }
@@ -134,11 +134,12 @@ fun SearchArticleBar(onQueryChange: (String) -> Unit, query: String, onSearch: (
     ) { }
 }
 @Composable
-fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
+fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed,) {
     LazyColumn(modifier = Modifier.fillMaxWidth())
     {
         items(arxivFeed().entries) { paper ->
-            Row(
+            val isMarqueeOn = remember { mutableStateOf(false) }
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(96.dp)
@@ -146,23 +147,27 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
                     .border(
                         width = 0.5.dp,
                         color = MaterialTheme.colorScheme.onTertiary
-                    )) {
-                Spacer(modifier = Modifier.width(24.dp))
-
-                //icon should be based on categories conditional when
+                    ).clipToBounds()
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onLongPress = { isMarqueeOn.value = true},
+                            onPress = { awaitRelease()
+                                isMarqueeOn.value = false }
+                        )
+                    },
+            ) {
                 Icon(modifier = Modifier.height(48.dp).width(44.dp).padding(
-                    start = 11.dp, top = 13.dp, end = 11.dp, bottom = 13.dp).align(Alignment.CenterVertically),
+                    start = 11.dp, top = 13.dp, end = 11.dp, bottom = 13.dp).align(Alignment.CenterStart).offset(x = 24.dp),
                     painter = painterResource(R.drawable.precision_manufacturing_24px), contentDescription = "",
                     tint = MaterialTheme.colorScheme.onBackground
                 )
-                Spacer(modifier = Modifier.width(16.dp))
-                Column(modifier = Modifier.fillMaxHeight()) {
+                Column(modifier = Modifier.fillMaxHeight().offset(x = 84.dp)) {
                     Spacer(modifier = Modifier.height(24.dp))
                     SearchScreenText(
                         text = paper.title ?: "title not found",
                         textStyle = MaterialTheme.typography.headlineLarge,
                         color = MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.width(266.dp)
+                        modifier = if(isMarqueeOn.value) {Modifier.basicMarquee() } else {Modifier.width(266.dp)}
 
                     )
                     Spacer(modifier = Modifier.height(8.dp))
@@ -174,8 +179,7 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed) {
 
                     )
                 }
-                Spacer(modifier = Modifier.width(24.dp))
-                Icon(modifier = Modifier.size(22.dp).align(Alignment.CenterVertically),
+                Icon(modifier = Modifier.size(22.dp).align(Alignment.CenterEnd).offset(x = -24.dp),
                     painter = painterResource(R.drawable.arrow_forward_ios_24px), contentDescription = "",
                     tint = MaterialTheme.colorScheme.onBackground)
             }
