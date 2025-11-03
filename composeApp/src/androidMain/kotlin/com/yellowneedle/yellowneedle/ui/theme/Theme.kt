@@ -21,7 +21,7 @@ private val LightColorScheme = lightColorScheme(
     onBackground = blackText,
     onSecondary = grayText,
     onTertiary = strokeWhite,
-
+onSurface = bigCardShadow
 )
 
 @Composable

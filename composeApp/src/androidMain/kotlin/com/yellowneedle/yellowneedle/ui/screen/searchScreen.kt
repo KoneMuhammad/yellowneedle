@@ -66,37 +66,47 @@ import com.yellowneedle.yellowneedle.R
 
 
 @Composable
-fun SearchScreenRoute( viewmodel : SearchViewModel = hiltViewModel())
-{
-    var userSearchText by remember { mutableStateOf("")}
+fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel()) {
+    var userSearchText by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
 
 
+    val scope = rememberCoroutineScope()
 
- val scope = rememberCoroutineScope()
-
-SearchScreenLayout(
-    arxivFeed = {viewmodel.uIState.value.results},
-    onQueryChange = {userText -> userSearchText = userText },
-    query = userSearchText,
-    onSearch = {scope.launch {viewmodel.getFeedSearchAll(it, start = 0,maxResults = 10,)}
-               expanded = false
+    SearchScreenLayout(
+        arxivFeed = { viewmodel.uIState.value.results },
+        onQueryChange = { userText -> userSearchText = userText },
+        query = userSearchText,
+        onSearch = {
+            scope.launch { viewmodel.getFeedSearchAll(it, start = 0, maxResults = 10) }
+            expanded = false
         },
-    leadingIcon = {
-        Icon(
-            imageVector = Icons.Default.Search,
-            contentDescription = "Search Icon"
-        )
-    },
-    placeHolder = {Text("search for research paper")},
-    expanded = expanded,
-) { newExpanded -> expanded = newExpanded  }
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = "Search Icon"
+            )
+        },
+        placeHolder = { Text("search for research paper") },
+        expanded = expanded,
+    ) { newExpanded -> expanded = newExpanded }
 }
 
 
 @Composable
-fun SearchScreenLayout(arxivFeed:() -> ArxivFeed ,onQueryChange: (String) -> Unit, query: String,onSearch: (String) -> Unit, expanded: Boolean, leadingIcon: @Composable () -> Unit,placeHolder: @Composable () -> Unit, onExpandedChange: (Boolean) -> Unit) {
-    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+fun SearchScreenLayout(
+    arxivFeed: () -> ArxivFeed,
+    onQueryChange: (String) -> Unit,
+    query: String,
+    onSearch: (String) -> Unit,
+    expanded: Boolean,
+    leadingIcon: @Composable () -> Unit,
+    placeHolder: @Composable () -> Unit,
+    onExpandedChange: (Boolean) -> Unit
+) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background)) {
         SearchArticleBar(
             onQueryChange = onQueryChange,
             query = query,
@@ -107,14 +117,23 @@ fun SearchScreenLayout(arxivFeed:() -> ArxivFeed ,onQueryChange: (String) -> Uni
             onExpandedChange = onExpandedChange
         )
         Spacer(Modifier.height(20.dp))
-FeedLazyColumn(
-    arxivFeed = arxivFeed,
-)
+        FeedLazyColumn(
+            arxivFeed = arxivFeed,
+        )
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchArticleBar(onQueryChange: (String) -> Unit, query: String, onSearch: (String) -> Unit, expanded: Boolean,leadingIcon: @Composable () -> Unit,placeHolder: @Composable () -> Unit,  onExpandedChange: (Boolean) -> Unit) {
+fun SearchArticleBar(
+    onQueryChange: (String) -> Unit,
+    query: String,
+    onSearch: (String) -> Unit,
+    expanded: Boolean,
+    leadingIcon: @Composable () -> Unit,
+    placeHolder: @Composable () -> Unit,
+    onExpandedChange: (Boolean) -> Unit
+) {
     SearchBar(
         inputField = {
             SearchBarDefaults.InputField(
@@ -133,8 +152,9 @@ fun SearchArticleBar(onQueryChange: (String) -> Unit, query: String, onSearch: (
         onExpandedChange = onExpandedChange
     ) { }
 }
+
 @Composable
-fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed,) {
+fun FeedLazyColumn(arxivFeed: () -> ArxivFeed) {
     LazyColumn(modifier = Modifier.fillMaxWidth())
     {
         items(arxivFeed().entries) { paper ->
@@ -147,27 +167,43 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed,) {
                     .border(
                         width = 0.5.dp,
                         color = MaterialTheme.colorScheme.onTertiary
-                    ).clipToBounds()
+                    )
+                    .clipToBounds()
                     .pointerInput(Unit) {
                         detectTapGestures(
-                            onLongPress = { isMarqueeOn.value = true},
-                            onPress = { awaitRelease()
-                                isMarqueeOn.value = false }
+                            onLongPress = { isMarqueeOn.value = true },
+                            onPress = {
+                                awaitRelease()
+                                isMarqueeOn.value = false
+                            }
                         )
                     },
             ) {
-                Icon(modifier = Modifier.height(48.dp).width(44.dp).padding(
-                    start = 11.dp, top = 13.dp, end = 11.dp, bottom = 13.dp).align(Alignment.CenterStart).offset(x = 24.dp),
+                Icon(
+                    modifier = Modifier
+                        .height(48.dp)
+                        .width(44.dp)
+                        .padding(
+                            start = 11.dp, top = 13.dp, end = 11.dp, bottom = 13.dp
+                        )
+                        .align(Alignment.CenterStart)
+                        .offset(x = 24.dp),
                     painter = painterResource(R.drawable.precision_manufacturing_24px), contentDescription = "",
                     tint = MaterialTheme.colorScheme.onBackground
                 )
-                Column(modifier = Modifier.fillMaxHeight().offset(x = 84.dp)) {
+                Column(modifier = Modifier
+                    .fillMaxHeight()
+                    .offset(x = 84.dp)) {
                     Spacer(modifier = Modifier.height(24.dp))
                     SearchScreenText(
                         text = paper.title ?: "title not found",
                         textStyle = MaterialTheme.typography.headlineLarge,
                         color = MaterialTheme.colorScheme.onBackground,
-                        modifier = if(isMarqueeOn.value) {Modifier.basicMarquee() } else {Modifier.width(266.dp)}
+                        modifier = if (isMarqueeOn.value) {
+                            Modifier.basicMarquee()
+                        } else {
+                            Modifier.width(265.dp)
+                        }
 
                     )
                     Spacer(modifier = Modifier.height(8.dp))
@@ -175,40 +211,48 @@ fun FeedLazyColumn(arxivFeed: ()-> ArxivFeed,) {
                         text = paper.published ?: "title not found",
                         textStyle = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSecondary,
-                        modifier = Modifier.width(266.dp).align(Alignment.Start)
+                        modifier = Modifier
+                            .width(266.dp)
+                            .align(Alignment.Start)
 
                     )
                 }
-                Icon(modifier = Modifier.size(22.dp).align(Alignment.CenterEnd).offset(x = -24.dp),
+                Icon(
+                    modifier = Modifier
+                        .size(22.dp)
+                        .align(Alignment.CenterEnd)
+                        .offset(x = -24.dp),
                     painter = painterResource(R.drawable.arrow_forward_ios_24px), contentDescription = "",
-                    tint = MaterialTheme.colorScheme.onBackground)
-            }
+                    tint = MaterialTheme.colorScheme.onBackground
+                )
             }
         }
     }
+}
 
 
 @Composable
-fun SearchScreenText(modifier: Modifier = Modifier,
-                     text: String,
-                     textStyle: TextStyle,
-                     color: Color =  Color.Unspecified,
-                     overflow: TextOverflow = TextOverflow.Ellipsis,
-                     maxLines: Int = 1,
-                     ) {
-    Text(modifier = modifier,
+fun SearchScreenText(
+    modifier: Modifier = Modifier,
+    text: String,
+    textStyle: TextStyle,
+    color: Color = Color.Unspecified,
+    overflow: TextOverflow = TextOverflow.Ellipsis,
+    maxLines: Int = 1,
+) {
+    Text(
+        modifier = modifier,
         text = text,
         style = textStyle,
         color = color,
         overflow = overflow,
         maxLines = maxLines,
-        )
+    )
 }
 
 
-
-@Preview(showBackground = true, widthDp = 411 )
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES,name = "Dark Mode",  widthDp = 411)
+@Preview(showBackground = true, widthDp = 411)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark Mode", widthDp = 411)
 @Composable
 fun FeedLazyColumnPreview() {
     YellowNeedleTheme {
@@ -237,29 +281,43 @@ fun FeedLazyColumnPreview() {
                         .border(
                             width = 0.5.dp,
                             color = MaterialTheme.colorScheme.onTertiary
-                        ).clipToBounds()
+                        )
+                        .clipToBounds()
                         .pointerInput(Unit) {
                             detectTapGestures(
                                 onLongPress = { isMarqueeOn = true },
-                                onPress = { awaitRelease()
-                                           isMarqueeOn  = false }
+                                onPress = {
+                                    awaitRelease()
+                                    isMarqueeOn = false
+                                }
                             )
                         },
                 ) {
-                    Icon(modifier = Modifier.height(48.dp).width(44.dp).padding(
-                        start = 11.dp, top = 13.dp, end = 11.dp, bottom = 13.dp).align(Alignment.CenterStart).offset(x = 24.dp),
+                    Icon(
+                        modifier = Modifier
+                            .height(48.dp)
+                            .width(44.dp)
+                            .padding(
+                                start = 11.dp, top = 13.dp, end = 11.dp, bottom = 13.dp
+                            )
+                            .align(Alignment.CenterStart)
+                            .offset(x = 24.dp),
                         painter = painterResource(R.drawable.precision_manufacturing_24px), contentDescription = "",
                         tint = MaterialTheme.colorScheme.onBackground
                     )
 
-                    Column(modifier = Modifier.fillMaxHeight().offset(x = 84.dp)) {
+                    Column(modifier = Modifier
+                        .fillMaxHeight()
+                        .offset(x = 84.dp)) {
                         Spacer(modifier = Modifier.height(24.dp))
                         SearchScreenText(
                             text = entries.title ?: "title not found",
-                         textStyle = MaterialTheme.typography.headlineLarge,
+                            textStyle = MaterialTheme.typography.headlineLarge,
                             color = MaterialTheme.colorScheme.onBackground,
                             modifier = if (isMarqueeOn) {
-                                Modifier.basicMarquee() } else {Modifier.width(266.dp)
+                                Modifier.basicMarquee()
+                            } else {
+                                Modifier.width(266.dp)
                             }
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -267,13 +325,20 @@ fun FeedLazyColumnPreview() {
                             text = entries.published ?: "title not found",
                             textStyle = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSecondary,
-                                    modifier = Modifier.width(266.dp).align(Alignment.Start)
+                            modifier = Modifier
+                                .width(266.dp)
+                                .align(Alignment.Start)
 
                         )
                     }
-                    Icon(modifier = Modifier.size(22.dp).align(Alignment.CenterEnd).offset(x = -24.dp),
+                    Icon(
+                        modifier = Modifier
+                            .size(22.dp)
+                            .align(Alignment.CenterEnd)
+                            .offset(x = -24.dp),
                         painter = painterResource(R.drawable.arrow_forward_ios_24px), contentDescription = "",
-                        tint = MaterialTheme.colorScheme.onBackground)
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
                 }
             }
         }
