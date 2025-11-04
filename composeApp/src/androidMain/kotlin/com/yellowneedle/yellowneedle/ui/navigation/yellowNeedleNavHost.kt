@@ -9,8 +9,8 @@ import com.yellowneedle.yellowneedle.ui.screen.SearchScreenRoute
 @Composable
 fun YellowNeedleNavHost(){
     val navController = rememberNavController()
-    NavHost(navController, startDestination = SearchDestination.route) {
-        composable(SearchDestination.route) {
+    NavHost(navController, startDestination = Search.route) {
+        composable<Search> {
             SearchScreenRoute()
         }
     }
