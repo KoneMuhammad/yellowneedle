@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SearchBar
@@ -55,7 +57,7 @@ import com.yellowneedle.yellowneedle.ui.navigation.Search
 
 
 @Composable
-fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), navController: NavHostController) {
+fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo: (Int) -> Unit) {
     var userSearchText by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
 
@@ -77,7 +79,7 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), navControlle
             )
         },
         placeHolder = { Text("search for research paper") },
-        onclick = {navController.navigate(Search.route) },
+        onclick =  onNavigateTo ,
         expanded = expanded,
     ) { newExpanded -> expanded = newExpanded }
 }
@@ -92,13 +94,14 @@ fun SearchScreenLayout(
     expanded: Boolean,
     leadingIcon: @Composable () -> Unit,
     placeHolder: @Composable () -> Unit,
-    onclick: () -> Unit,
+    onclick: (Int) -> Unit,
     onExpandedChange: (Boolean) -> Unit
 ) {
     Column(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.background)) {
-        SearchArticleBar(
+        SearchBar(
+            modifier = Modifier.width(347.dp).align(Alignment.CenterHorizontally),
             onQueryChange = onQueryChange,
             query = query,
             onSearch = onSearch,
@@ -117,7 +120,7 @@ fun SearchScreenLayout(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchArticleBar(
+fun SearchBar(modifier: Modifier = Modifier,
     onQueryChange: (String) -> Unit,
     query: String,
     onSearch: (String) -> Unit,
@@ -127,6 +130,7 @@ fun SearchArticleBar(
     onExpandedChange: (Boolean) -> Unit
 ) {
     SearchBar(
+        modifier = modifier,
         inputField = {
             SearchBarDefaults.InputField(
                 query = query,
@@ -146,10 +150,10 @@ fun SearchArticleBar(
 }
 
 @Composable
-fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: () -> Unit) {
+fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit) {
     LazyColumn(modifier = Modifier.fillMaxWidth())
     {
-        items(arxivFeed().entries) { paper ->
+        itemsIndexed(arxivFeed().entries) {index, paper ->
             val isMarqueeOn = remember { mutableStateOf(false) }
             Box(
                 modifier = Modifier
@@ -161,7 +165,7 @@ fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: () -> Unit) {
                         color = MaterialTheme.colorScheme.onTertiary
                     )
                     .clipToBounds()
-                    .clickable(onClick = onclick )
+                    .clickable(onClick = {onclick(index)} )
                     .pointerInput(Unit) {
                         detectTapGestures(
                             onLongPress = { isMarqueeOn.value = true },
