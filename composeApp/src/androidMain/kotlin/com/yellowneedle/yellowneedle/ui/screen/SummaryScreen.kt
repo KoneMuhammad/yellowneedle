@@ -37,17 +37,14 @@ fun SummaryRouteScreen(
     viewmodel: SearchViewModel = hiltViewModel(),
     index: Int
 ) {
-    val summary = viewmodel.uIState.value.results.entries
-
-    viewmodel.uIState.value.results.entries[index].summary?: "Information Unavailable Right Now"
     SummaryLayout(
-        text = TODO(),
-        modifier = TODO()
+        text = {viewmodel.uIState.value.results.entries[index].summary?: "Information Unavailable Right Now"}
+
     )
 }
 
 @Composable
-fun SummaryLayout(text: String, modifier: Modifier = Modifier) {
+fun SummaryLayout(text: () -> String, modifier: Modifier = Modifier) {
     Box() {
         CardWithShadow(
             modifier = Modifier
@@ -63,7 +60,7 @@ fun SummaryLayout(text: String, modifier: Modifier = Modifier) {
                 .padding(12.dp)) {
             SearchScreenText(
                 modifier = modifier,
-                text = text,
+                text = text(),
                 textStyle = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 maxLines = Int.MAX_VALUE
