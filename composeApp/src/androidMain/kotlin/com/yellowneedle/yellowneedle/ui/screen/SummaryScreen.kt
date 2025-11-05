@@ -33,7 +33,7 @@ import com.yellowneedle.yellowneedle.ui.theme.YellowNeedleTheme
 import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
 
 @Composable
-fun SummaryRouteScreen(
+fun SummaryScreenRoute(
     viewmodel: SearchViewModel = hiltViewModel(),
     index: Int
 ) {
@@ -84,7 +84,7 @@ fun CardWithShadow(modifier: Modifier = Modifier, content: @Composable (ColumnSc
 @Preview(showBackground = true, name = "Light", widthDp = 411, heightDp = 915)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark", widthDp = 411, heightDp = 915)
 @Composable
-fun SummaryScreenRoute() {
+fun SummaryScreenPreview() {
     YellowNeedleTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             Card(

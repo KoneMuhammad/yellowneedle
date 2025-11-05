@@ -8,7 +8,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,11 +48,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.yellowneedle.yellowneedle.ui.theme.YellowNeedleTheme
 import kotlinx.coroutines.launch
 import com.yellowneedle.yellowneedle.R
-import com.yellowneedle.yellowneedle.ui.navigation.Search
 
 
 @Composable
@@ -100,7 +97,7 @@ fun SearchScreenLayout(
     Column(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.background)) {
-        SearchBar(
+        CustomSearchBar(
             modifier = Modifier.width(347.dp).align(Alignment.CenterHorizontally),
             onQueryChange = onQueryChange,
             query = query,
@@ -120,14 +117,14 @@ fun SearchScreenLayout(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBar(modifier: Modifier = Modifier,
-    onQueryChange: (String) -> Unit,
-    query: String,
-    onSearch: (String) -> Unit,
-    expanded: Boolean,
-    leadingIcon: @Composable () -> Unit,
-    placeHolder: @Composable () -> Unit,
-    onExpandedChange: (Boolean) -> Unit
+fun CustomSearchBar(modifier: Modifier = Modifier,
+                    onQueryChange: (String) -> Unit,
+                    query: String,
+                    onSearch: (String) -> Unit,
+                    expanded: Boolean,
+                    leadingIcon: @Composable () -> Unit,
+                    placeHolder: @Composable () -> Unit,
+                    onExpandedChange: (Boolean) -> Unit
 ) {
     SearchBar(
         modifier = modifier,
@@ -165,10 +162,10 @@ fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit) {
                         color = MaterialTheme.colorScheme.onTertiary
                     )
                     .clipToBounds()
-                    .clickable(onClick = {onclick(index)} )
                     .pointerInput(Unit) {
                         detectTapGestures(
                             onLongPress = { isMarqueeOn.value = true },
+                            onTap = { onclick(index) },
                             onPress = {
                                 awaitRelease()
                                 isMarqueeOn.value = false

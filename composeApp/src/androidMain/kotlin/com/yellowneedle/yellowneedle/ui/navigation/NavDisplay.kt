@@ -36,7 +36,8 @@ val viewmodel: SearchViewModel = hiltViewModel()
                 is Summary -> NavEntry(key){
                     SummaryScreenRoute(
                         viewmodel = viewmodel,
-                         INDEX = key.index)
+                        index = key.index
+                    )
                 }
                 else -> NavEntry(Unit){
                     Text("unknown Route")
