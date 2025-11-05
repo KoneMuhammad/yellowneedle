@@ -4,75 +4,59 @@ import com.yellowneedle.yellowneedle.data.dto.ArxivFeed
 import com.yellowneedle.yellowneedle.data.source.ArxivFeedNetworkDatSource
 import jakarta.inject.Inject
 
-class ArxivFeedNetworkRepository @Inject constructor(private val networkDatSource: ArxivFeedNetworkDatSource) :
+class ArxivFeedNetworkRepository @Inject constructor(private val arxivFeedNetworkDatSource: ArxivFeedNetworkDatSource) :
     ArxivFeedRepository {
 
-    override suspend fun getFeedSearchByTitle(
+    override suspend fun searchAllAiMlTitle(
         query: String,
         start: Int,
         maxResults: Int
     ): ArxivFeed =
-        networkDatSource.getFeedSearchByTitle(query, start, maxResults)
+        arxivFeedNetworkDatSource.searchAllAiMlTitle(query, start, maxResults)
 
-    override suspend fun getFeedSearchByAuthor(
+    override suspend fun searchRoboticsTitles(
         query: String,
         start: Int,
         maxResults: Int
     ): ArxivFeed =
-        networkDatSource.getFeedSearchByAuthor(query, start, maxResults)
+        arxivFeedNetworkDatSource.searchRoboticsTitles(query, start, maxResults)
 
-    override suspend fun getFeedSearchByAbstract(
+    override suspend fun searchArtificialIntelligenceTitles(
         query: String,
         start: Int,
         maxResults: Int
     ): ArxivFeed =
-        networkDatSource.getFeedSearchByAbstract(query, start, maxResults)
+        arxivFeedNetworkDatSource.searchArtificialIntelligenceTitles(query, start, maxResults)
 
 
-    override suspend fun getFeedSearchByComment(
+    override suspend fun searchMachineLearningTitles(
         query: String,
         start: Int,
         maxResults: Int
     ): ArxivFeed =
-        networkDatSource.getFeedSearchByComment(query, start, maxResults)
+        arxivFeedNetworkDatSource.searchMachineLearningTitles(query, start, maxResults)
 
-    override suspend fun getFeedSearchByJournal(
+    override suspend fun searchMultiAgentSystemTitles(
         query: String,
         start: Int,
         maxResults: Int
     ): ArxivFeed =
-        networkDatSource.getFeedSearchByJournal(query, start, maxResults)
+        arxivFeedNetworkDatSource.searchMultiAgentSystemTitles(query, start, maxResults)
 
 
-    override suspend fun getFeedSearchByCategory(
+    override suspend fun searchComputerVisionAndPatternRecognitionTitles(
         query: String,
         start: Int,
         maxResults: Int
     ): ArxivFeed =
-        networkDatSource.getFeedSearchByCategory(query, start, maxResults)
+        arxivFeedNetworkDatSource.searchComputerVisionAndPatternRecognitionTitles(query, start, maxResults)
 
 
-    override suspend fun getFeedSearchByReportNumber(
+    override suspend fun searchNaturalLanguageProcessingTitles(
         query: String,
         start: Int,
         maxResults: Int
     ): ArxivFeed =
-        networkDatSource.getFeedSearchByReportNumber(query, start, maxResults)
-
-
-    override suspend fun getFeedSearchById(
-        query: String,
-        start: Int,
-        maxResults: Int
-    ): ArxivFeed =
-        networkDatSource.getFeedSearchById(query, start, maxResults)
-
-
-    override suspend fun getFeedSearchAll(
-        query: String,
-        start: Int,
-        maxResults: Int
-    ): ArxivFeed =
-        networkDatSource.getFeedSearchAll(query, start, maxResults)
-
+        arxivFeedNetworkDatSource.searchNaturalLanguageProcessingTitles(query, start, maxResults)
 }
+

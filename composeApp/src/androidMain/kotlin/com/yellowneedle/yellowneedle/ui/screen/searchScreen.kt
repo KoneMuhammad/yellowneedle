@@ -97,7 +97,7 @@ fun SearchScreenLayout(
 ) {
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(MaterialTheme.colorScheme.background)) {
+        .background(color = MaterialTheme.colorScheme.background)) {
         CustomSearchBar(
             modifier = Modifier.width(347.dp).align(Alignment.CenterHorizontally),
             onQueryChange = onQueryChange,
@@ -174,18 +174,21 @@ fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit) {
                         )
                     },
             ) {
-                Icon(
-                    modifier = Modifier
-                        .height(48.dp)
-                        .width(44.dp)
-                        .padding(
-                            start = 11.dp, top = 13.dp, end = 11.dp, bottom = 13.dp
-                        )
-                        .align(Alignment.CenterStart)
-                        .offset(x = 24.dp),
-                    painter = painterResource(R.drawable.precision_manufacturing_24px), contentDescription = "",
-                    tint = MaterialTheme.colorScheme.onBackground
-                )
+                //added this
+                if (!isMarqueeOn.value) {
+                    Icon(
+                        modifier = Modifier
+                            .height(48.dp)
+                            .width(44.dp)
+                            .padding(
+                                start = 11.dp, top = 13.dp, end = 11.dp, bottom = 13.dp
+                            )
+                            .align(Alignment.CenterStart)
+                            .offset(x = 24.dp),
+                        painter = painterResource(R.drawable.precision_manufacturing_24px), contentDescription = "",
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
+                }
                 Column(modifier = Modifier
                     .fillMaxHeight()
                     .offset(x = 84.dp)) {
@@ -265,8 +268,6 @@ fun FeedLazyColumnPreview() {
             )
         )
         var isMarqueeOn by remember { mutableStateOf(false) }
-        val textWidth = remember { mutableStateOf(0) }
-        val boxWidth = remember { mutableStateOf(0) }
 
         LazyColumn() {
             items(sampleFeed.entries) { entries ->

@@ -21,33 +21,66 @@ class ArxivFeedNetworkDatSource @Inject constructor(private val client: ArxivFee
         serializer.read(ArxivFeed::class.java, xml)
     }
 
-    suspend fun getFeedSearchByTitle(title: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("ti:$title", start, maxResults)
+    suspend fun searchAllAiMlTitle(
+        query: String,
+        start: Int = 0,
+        maxResults: Int = 10
+    ): ArxivFeed {
+        val categories = listOf("cs.AI", "cs.LG", "cs.MA", "cs.RO", "cs.CV", "cs.CL")
+        val categoryQuery = categories.joinToString("+OR+") { "cat:$it" }
+        val fullQuery = "($categoryQuery)+AND+ti:$query"
+        return getArxivFeed(fullQuery, start, maxResults)
+    }
 
-    suspend fun getFeedSearchByAuthor(author: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("au:$author", start, maxResults)
+    suspend fun searchRoboticsTitles(
+        query: String,
+        start: Int = 0,
+        maxResults: Int = 10
+    ): ArxivFeed {
+        val fullQuery = "cat:cs.RO+AND+ti:$query"
+        return getArxivFeed(fullQuery, start, maxResults)
+    }
 
-    suspend fun getFeedSearchByAbstract(abs: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("abs:$abs", start, maxResults)
-
-    suspend fun getFeedSearchByComment(comment: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("co:$comment", start, maxResults)
-
-    suspend fun getFeedSearchByJournal(journal: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("jr:$journal", start, maxResults)
-
-    suspend fun getFeedSearchByCategory(cat: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("cat:$cat", start, maxResults)
-
-    suspend fun getFeedSearchByReportNumber(rn: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("rn:$rn", start, maxResults)
-
-    suspend fun getFeedSearchById(id: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("id:$id", start, maxResults)
-
-    suspend fun getFeedSearchAll(query: String, start: Int = 0, maxResults: Int = 10) =
-        getArxivFeed("all:$query", start, maxResults)
-
-
+    suspend fun searchArtificialIntelligenceTitles(
+        query: String,
+        start: Int = 0,
+        maxResults: Int = 10
+    ): ArxivFeed {
+        val fullQuery = "cat:cs.AI+AND+ti:$query"
+        return getArxivFeed(fullQuery, start, maxResults)
+    }
+    suspend fun searchMachineLearningTitles(
+        query: String,
+        start: Int = 0,
+        maxResults: Int = 10
+    ): ArxivFeed {
+        val fullQuery = "cat:cs.LG+AND+ti:$query"
+        return getArxivFeed(fullQuery, start, maxResults)
+    }
+    suspend fun searchMultiAgentSystemTitles(
+        query: String,
+        start: Int = 0,
+        maxResults: Int = 10
+    ): ArxivFeed {
+        val fullQuery = "cat:cs.MA+AND+ti:$query"
+        return getArxivFeed(fullQuery, start, maxResults)
+    }
+    suspend fun searchComputerVisionAndPatternRecognitionTitles(
+        query: String,
+        start: Int = 0,
+        maxResults: Int = 10
+    ): ArxivFeed {
+        val fullQuery = "cat:cs.CV+AND+ti:$query"
+        return getArxivFeed(fullQuery, start, maxResults)
+    }
+    // this is (NLP) natural language processing
+    suspend fun searchNaturalLanguageProcessingTitles(
+        query: String,
+        start: Int = 0,
+        maxResults: Int = 10
+    ): ArxivFeed {
+        val fullQuery = "cat:cs.CL+AND+ti:$query"
+        return getArxivFeed(fullQuery, start, maxResults)
+    }
 
 }

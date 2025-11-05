@@ -23,11 +23,11 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         private set
 
     var fetchJob: Job? = null
-    fun getFeedSearchByTitle(query: String, start: Int, maxResults: Int) {
+    fun getFeedSearchAllAiMlTitle(query: String, start: Int, maxResults: Int) {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                val arxivFeed = arxivFeedRepository.getFeedSearchByTitle(query, start, maxResults)
+                val arxivFeed = arxivFeedRepository.searchAllAiMlTitle(query, start, maxResults)
                 uIState.value = uIState.value.copy(
                     results = arxivFeed,
                 )
@@ -37,11 +37,11 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
 
-    fun getFeedSearchByAuthor(query: String, start: Int, maxResults: Int) {
+    fun getFeedSearchRoboticsTitles(query: String, start: Int, maxResults: Int) {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                val arxivFeed = arxivFeedRepository.getFeedSearchByAuthor(query, start, maxResults)
+                val arxivFeed = arxivFeedRepository.searchRoboticsTitles(query, start, maxResults)
                 uIState.value = uIState.value.copy(
                     results = arxivFeed,
                 )
@@ -51,11 +51,11 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
 
-    fun getFeedSearchByAbstract(query: String, start: Int, maxResults: Int) {
+    fun getFeedSearchArtificialIntelligenceTitles(query: String, start: Int, maxResults: Int) {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                val arxivFeed = arxivFeedRepository.getFeedSearchByAbstract(query, start, maxResults)
+                val arxivFeed = arxivFeedRepository.searchArtificialIntelligenceTitles(query, start, maxResults)
                 uIState.value = uIState.value.copy(
                     results = arxivFeed,
                 )
@@ -65,11 +65,11 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
 
-    fun getFeedSearchByComment(query: String, start: Int, maxResults: Int) {
+    fun getFeedSearchMachineLearningTitles(query: String, start: Int, maxResults: Int) {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                val arxivFeed = arxivFeedRepository.getFeedSearchByComment(query, start, maxResults)
+                val arxivFeed = arxivFeedRepository.searchMachineLearningTitles(query, start, maxResults)
                 uIState.value = uIState.value.copy(
                     results = arxivFeed,
                 )
@@ -79,11 +79,11 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
 
-    fun getFeedSearchByJournal(query: String, start: Int, maxResults: Int) {
+    fun getFeedSearchMultiAgentSystemTitles(query: String, start: Int, maxResults: Int) {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                val arxivFeed = arxivFeedRepository.getFeedSearchByJournal(query, start, maxResults)
+                val arxivFeed = arxivFeedRepository.searchMultiAgentSystemTitles(query, start, maxResults)
                 uIState.value = uIState.value.copy(
                     results = arxivFeed,
                 )
@@ -93,11 +93,11 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
 
-    fun getFeedSearchByCategory(query: String, start: Int, maxResults: Int) {
+    fun getFeedSearchComputerVisionAndPatternRecognitionTitles(query: String, start: Int, maxResults: Int) {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                val arxivFeed = arxivFeedRepository.getFeedSearchByCategory(query, start, maxResults)
+                val arxivFeed = arxivFeedRepository.searchComputerVisionAndPatternRecognitionTitles(query, start, maxResults)
                 uIState.value = uIState.value.copy(
                     results = arxivFeed,
                 )
@@ -107,59 +107,16 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
         }
     }
 
-    fun getFeedSearchByReportNumber(query: String, start: Int, maxResults: Int) {
+    fun getFeedSearchNaturalLanguageProcessingTitles(query: String, start: Int, maxResults: Int) {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                val arxivFeed = arxivFeedRepository.getFeedSearchByReportNumber(query, start, maxResults)
+                val arxivFeed = arxivFeedRepository.searchNaturalLanguageProcessingTitles(query, start, maxResults)
                 uIState.value = uIState.value.copy(
                     results = arxivFeed,
                 )
             } catch (e: Exception) {
                 uIState.value = uIState.value.copy(error = "Network Failure")
-            }
-        }
-    }
-
-    fun getFeedSearchById(query: String, start: Int, maxResults: Int) {
-        fetchJob?.cancel()
-        fetchJob = viewModelScope.launch {
-            try {
-                val arxivFeed = arxivFeedRepository.getFeedSearchById(query, start, maxResults)
-                uIState.value = uIState.value.copy(
-                    results = arxivFeed,
-                )
-            } catch (e: Exception) {
-                uIState.value = uIState.value.copy(error = "Network Failure")
-            }
-        }
-    }
-
-    fun getFeedSearchAll(query: String, start: Int = 0, maxResults: Int = 10) {
-        // Logs immediately when the function is invoked
-        Log.d("SearchVM", "getFeedSearchAll called with query='$query'")
-
-        // Cancel any previous fetch
-        fetchJob?.cancel()
-
-        // Launch a new coroutine in ViewModel scope
-        fetchJob = viewModelScope.launch {
-            Log.d("SearchVM", "Coroutine started for query='$query'")
-
-            try {
-                val arxivFeed = arxivFeedRepository.getFeedSearchAll(query, start, maxResults)
-                // Update UI state
-                uIState.value = uIState.value.copy(results = arxivFeed)
-
-                // Log after successful fetch
-                Log.d(
-                    "SearchVM",
-                    "Fetched ${arxivFeed.entries.size} results for query='$query'"
-                )
-            } catch (e: Exception) {
-                uIState.value = uIState.value.copy(error = "Network Failure")
-                // Log the error
-                Log.d("SearchVM", "Network failure for query='$query': ${e.message}")
             }
         }
     }

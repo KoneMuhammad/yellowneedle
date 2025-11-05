@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -50,13 +52,12 @@ fun SummaryScreenRoute(
 
 @Composable
 fun SummaryLayout(text: () -> String, modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.background).verticalScroll(rememberScrollState())) {
         Icon(
             modifier = Modifier
                 .size(22.dp)
                 .align(Alignment.TopCenter)
                 .offset(y = 32.dp),
-            //download glasses or paper icon/ or create paper picture with sketch etc
             painter = painterResource(R.drawable.article_24px), contentDescription = "",
             tint = MaterialTheme.colorScheme.onBackground
         )
@@ -92,27 +93,16 @@ fun CardWithShadow(modifier: Modifier = Modifier, content: @Composable (ColumnSc
 @Composable
 fun SummaryScreenPreview(modifier: Modifier = Modifier) {
     YellowNeedleTheme {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize().
+        background(color = MaterialTheme.colorScheme.background).verticalScroll(rememberScrollState())) {
             YellowNeedleTheme {
                 SearchScreenText(
                     modifier = modifier
                         .width(347.dp)
                         .align(Alignment.TopCenter)
                         .offset(y = 76.dp),
-                    text = "this paper focuses on the transofrmations from the individual machine tot he equivalent \n" +
-                            "qwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwq\n" +
-                            "\n" +
-                            "wqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwq\n" +
-                            "\n" +
-                            "wqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwq\n" +
-                            "\n" +
-                            "wqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwq\n" +
-                            "\n" +
-                            "wqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwtyhe55555555555555555555555555555555555555555555555555555555yyyyyyyyyyyyyyyyyyyyyy\n" +
-                            "\n" +
-                            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyrkdfsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa4twwwwwwwwwwwwwwwwwwwww\n" +
-                            "wwwwwwwwmi777777777777777777777777778o6,o86ykyukjtdsaefsdggjhgfdesfhjjfdddddddddddddddddddddddddtffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-                    textStyle = MaterialTheme.typography.displaySmall,
+                    text = previewText,
+                    textStyle = MaterialTheme.typography.displayMedium,
                     color = MaterialTheme.colorScheme.onBackground,
                     textAlign = TextAlign.Center,
                     maxLines = Int.MAX_VALUE
@@ -121,3 +111,19 @@ fun SummaryScreenPreview(modifier: Modifier = Modifier) {
         }
     }
 }
+
+const val previewText = "this paper focuses on the transofrmations from the individual machine tot he equivalent \n" +
+        "qwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwq\n" +
+        "\n" +
+        "wqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwq\n" +
+        "\n" +
+        "wqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwq\n" +
+        "\n" +
+        "wqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwq\n" +
+        "\n" +
+        "wqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwqwtyhe55555555555555555555555555555555555555555555555555555555yyyyyyyyyyyyyyyyyyyyyy\n" +
+        "\n" +
+        "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyrkdfsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa4twwwwwwwwwwwwwwwwwwwww\n" +
+        "wwwwwwwwmi777777777777777777777777778o6,o86ykyukjtdsaefsdggjhgfdesfhjjfdddddddddddddddddddddddddtfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffsaeggggggg" +
+        "wgeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+        "gewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwiopjowpeijgoiwegwfff"
