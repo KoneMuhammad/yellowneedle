@@ -46,6 +46,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.yellowneedle.yellowneedle.ui.theme.YellowNeedleTheme
@@ -233,11 +234,13 @@ fun SearchScreenText(
     color: Color = Color.Unspecified,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     maxLines: Int = 1,
+    textAlign: TextAlign? = null
 ) {
     Text(
         modifier = modifier,
         text = text,
         style = textStyle,
+        textAlign = textAlign,
         color = color,
         overflow = overflow,
         maxLines = maxLines,

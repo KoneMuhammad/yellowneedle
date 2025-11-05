@@ -18,6 +18,9 @@ val YellowNeedleTypography = Typography(
     bodyLarge = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif),
     bodyMedium = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif),
     bodySmall = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif),
+
+    displayMedium =  TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.25.sp, fontFamily = FontFamily.SansSerif),
+            displaySmall =  TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.sp, fontFamily = FontFamily.SansSerif),
 )
 
 //line height
