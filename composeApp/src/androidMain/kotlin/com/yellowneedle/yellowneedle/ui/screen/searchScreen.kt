@@ -1,6 +1,7 @@
 package com.yellowneedle.yellowneedle.ui.screen
 
 import android.content.res.Configuration
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
@@ -40,6 +41,7 @@ import com.yellowneedle.yellowneedle.data.dto.ArxivFeed
 import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -47,9 +49,11 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
@@ -72,7 +76,13 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
 
     var categoryMenuExpanded by remember { mutableStateOf(false) }
 
+    val rotation by animateFloatAsState(if (categoryMenuExpanded) 180f else 0f)
 
+    val backgroundColor = remember { mutableStateOf(Color.Transparent) }
+
+
+    val pressedColor = MaterialTheme.colorScheme.onTertiary.copy(alpha = 0.12f)
+    val defaultColor = Color.Transparent
 
     val scope = rememberCoroutineScope()
 
@@ -94,9 +104,10 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
         },
         trailingIcon = { Box {
             IconButton(onClick = { categoryMenuExpanded = !categoryMenuExpanded }) {
-                Icon(
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = "Select Category"
+                Icon(                                            // drowp down
+                    painter = painterResource(selectedCategory.iconRes),
+                    contentDescription = selectedCategory.displayName,
+                    modifier = Modifier.rotate(rotation)
                 )
             }
 
@@ -106,11 +117,22 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
             ) {
                 ArxivCategory.entries.forEach { category ->
                     DropdownMenuItem(
-                        text = { Text(category.displayName) },
+                        text = { Text(category.displayName, color = MaterialTheme.colorScheme.onBackground)},
                         onClick = {
                             selectedCategory = category
                             categoryMenuExpanded = false
-                        }
+                        },
+                        modifier = Modifier
+                            .background(backgroundColor.value)
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onPress = {
+                                        backgroundColor.value = pressedColor
+                                        tryAwaitRelease()
+                                        backgroundColor.value = defaultColor
+                                    }
+                                )
+                            }
                     )
                 }
             }
@@ -183,9 +205,14 @@ fun CustomSearchBar(modifier: Modifier = Modifier,
                 trailingIcon = trailingIcon,
                 placeholder = placeHolder,
                 onExpandedChange = onExpandedChange,
+                colors = SearchBarDefaults.inputFieldColors(
+                    focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+                    cursorColor = MaterialTheme.colorScheme.onBackground,
+                    focusedLeadingIconColor = MaterialTheme.colorScheme.onBackground,
+                    unfocusedLeadingIconColor = MaterialTheme.colorScheme.onBackground,
 
-
-                )
+                ))
         },
         expanded = expanded,
         onExpandedChange = onExpandedChange
