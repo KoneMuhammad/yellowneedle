@@ -26,6 +26,7 @@ simpleXml = "2.7.1"
 nav3Core = "1.0.0-beta01"
 lifecycleViewmodelNav3 = "2.10.0-beta01"
 material3AdaptiveNav3 = "1.3.0-alpha02"
+material3 = "1.4.0"
 
 [libraries]
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
@@ -54,6 +55,7 @@ kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktorClientOkhttp" }
 serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "core" }
 simple-xml = { module = "org.simpleframework:simple-xml", version.ref = "simpleXml" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

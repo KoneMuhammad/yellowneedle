@@ -2,21 +2,21 @@
 
 ---
 
-**mobile app  for finding AI and ML research papers before anyone else**
+**Mobile App for Discovering AI & ML Research Papers Ahead of the Curve**
 
 ![Yellow Needle App Screenshot](assets/yellow_needle.png)
 
 ---
-
-##  
-
-stay in tune with cutting-edge AI and ML papers, while commuting or casually scrolling.
+## 
+Get concise summaries of the latest research while commuting or casually browsing, so you can quickly identify relevant insights without wading through long, irrelevant papers.
 ---
 
-##  What It Does
+##  Features
 
-- Filter for papers; **Robotics, Computer Vision, NLP, and Multi-Agent Systems**
-- Find implementation-ready ideas before they trend
+
+- Filter papers in **Robotics, Computer Vision, NLP, and Machine Learning**
+- Discover implementation-ready ideas before they trend
+- Quickly assess relevance through summarized content
 
 ---
 

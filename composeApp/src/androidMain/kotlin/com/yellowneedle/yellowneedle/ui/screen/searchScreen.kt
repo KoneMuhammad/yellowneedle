@@ -246,7 +246,6 @@ fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit, onLoadMor
                         )
                     },
             ) {
-                //added this
                 if (!isMarqueeOn.value) {
                     Icon(
                         modifier = Modifier
