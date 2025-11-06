@@ -39,9 +39,13 @@ import com.yellowneedle.yellowneedle.data.dto.ArxivEntry
 import com.yellowneedle.yellowneedle.data.dto.ArxivFeed
 import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -88,6 +92,29 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
                 contentDescription = "Search Icon"
             )
         },
+        trailingIcon = { Box {
+            IconButton(onClick = { categoryMenuExpanded = !categoryMenuExpanded }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowDropDown,
+                    contentDescription = "Select Category"
+                )
+            }
+
+            DropdownMenu(
+                expanded = categoryMenuExpanded,
+                onDismissRequest = { categoryMenuExpanded = false }
+            ) {
+                ArxivCategory.entries.forEach { category ->
+                    DropdownMenuItem(
+                        text = { Text(category.displayName) },
+                        onClick = {
+                            selectedCategory = category
+                            categoryMenuExpanded = false
+                        }
+                    )
+                }
+            }
+        }},
         placeHolder = { Text("search for research paper") },
         onclick =  onNavigateTo ,
         expanded = expanded,
@@ -104,6 +131,7 @@ fun SearchScreenLayout(
     onSearch: (String) -> Unit,
     expanded: Boolean,
     leadingIcon: @Composable () -> Unit,
+    trailingIcon: @Composable () -> Unit,
     placeHolder: @Composable () -> Unit,
     onclick: (Int) -> Unit,
     onExpandedChange: (Boolean) -> Unit
@@ -118,6 +146,7 @@ fun SearchScreenLayout(
             onSearch = onSearch,
             expanded = expanded,
             leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon,
             placeHolder = placeHolder,
             onExpandedChange = onExpandedChange
         )
@@ -139,6 +168,7 @@ fun CustomSearchBar(modifier: Modifier = Modifier,
                     expanded: Boolean,
                     leadingIcon: @Composable () -> Unit,
                     placeHolder: @Composable () -> Unit,
+                    trailingIcon: @Composable () -> Unit,
                     onExpandedChange: (Boolean) -> Unit
 ) {
     SearchBar(
@@ -150,6 +180,7 @@ fun CustomSearchBar(modifier: Modifier = Modifier,
                 onSearch = onSearch,
                 expanded = expanded,
                 leadingIcon = leadingIcon,
+                trailingIcon = trailingIcon,
                 placeholder = placeHolder,
                 onExpandedChange = onExpandedChange,
 
