@@ -6,8 +6,10 @@ import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,6 +40,8 @@ import com.yellowneedle.yellowneedle.data.dto.ArxivFeed
 import com.yellowneedle.yellowneedle.ui.viewmodel.SearchViewModel
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -60,15 +64,21 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
     var userSearchText by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
 
+    var selectedCategory by remember { mutableStateOf(ArxivCategory.AI_ML) }
+
+    var categoryMenuExpanded by remember { mutableStateOf(false) }
+
+
 
     val scope = rememberCoroutineScope()
+
 
     SearchScreenLayout(
         arxivFeed = { viewmodel.uIState.value.results },
         onQueryChange = { userText -> userSearchText = userText },
         query = userSearchText,
         onSearch = {
-            scope.launch { viewmodel.getFeedSearchAll(it, start = 0, maxResults = 50) }
+            scope.launch { viewmodel.searchByCategory(selectedCategory, userSearchText, start = 0, maxResults = 50) }
             expanded = false
         },
         onLoadMoreEntries = { scope.launch {viewmodel.loadNextPage(userSearchText) }},
