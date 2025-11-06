@@ -1,6 +1,5 @@
 package com.yellowneedle.yellowneedle.ui.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,6 +35,25 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
             }
         }
     }
+    suspend fun loadNextPage(usersQuery: String) {
+        val currentArxivFeed = uIState.value.results
+        val offset = currentArxivFeed.entries.size
+
+        try {
+            val nextPage = arxivFeedRepository.searchAllAiMlTitle(
+                query = usersQuery,
+                start = offset,
+                maxResults = 50
+            )
+            val mergedEntries = (currentArxivFeed.entries + nextPage.entries).toMutableList()
+
+            val mergedFeed = currentArxivFeed.copy(entries = mergedEntries)
+
+            uIState.value = uIState.value.copy(results = mergedFeed)
+        } catch (e: Exception) {
+            uIState.value = uIState.value.copy(error = "Failed to load more results")
+        }
+    }
 
     fun getFeedSearchRoboticsTitles(query: String, start: Int, maxResults: Int) {
         fetchJob?.cancel()
@@ -44,6 +62,8 @@ class SearchViewModel@Inject constructor(private val arxivFeedRepository: ArxivF
                 val arxivFeed = arxivFeedRepository.searchRoboticsTitles(query, start, maxResults)
                 uIState.value = uIState.value.copy(
                     results = arxivFeed,
+
+
                 )
             } catch (e: Exception) {
                 uIState.value = uIState.value.copy(error = "Network Failure")

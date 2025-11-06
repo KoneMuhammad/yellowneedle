@@ -49,6 +49,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yellowneedle.yellowneedle.ui.theme.YellowNeedleTheme
 import kotlinx.coroutines.launch
 import com.yellowneedle.yellowneedle.R
@@ -67,9 +68,10 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
         onQueryChange = { userText -> userSearchText = userText },
         query = userSearchText,
         onSearch = {
-            scope.launch { viewmodel.getFeedSearchAll(it, start = 0, maxResults = 10) }
+            scope.launch { viewmodel.getFeedSearchAll(it, start = 0, maxResults = 50) }
             expanded = false
         },
+        onLoadMoreEntries = { scope.launch {viewmodel.loadNextPage(userSearchText) }},
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
@@ -87,6 +89,7 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
 fun SearchScreenLayout(
     arxivFeed: () -> ArxivFeed,
     onQueryChange: (String) -> Unit,
+    onLoadMoreEntries: () -> Unit,
     query: String,
     onSearch: (String) -> Unit,
     expanded: Boolean,
@@ -111,6 +114,7 @@ fun SearchScreenLayout(
         Spacer(Modifier.height(20.dp))
         FeedLazyColumn(
             onclick = onclick,
+            onLoadMoreEntries = onLoadMoreEntries ,
             arxivFeed = arxivFeed,
         )
     }
@@ -148,7 +152,7 @@ fun CustomSearchBar(modifier: Modifier = Modifier,
 }
 
 @Composable
-fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit) {
+fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit, onLoadMoreEntries: () -> Unit) {
     LazyColumn(modifier = Modifier.fillMaxWidth())
     {
         itemsIndexed(arxivFeed().entries) {index, paper ->
@@ -223,6 +227,9 @@ fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit) {
                     painter = painterResource(R.drawable.arrow_forward_ios_24px), contentDescription = "",
                     tint = MaterialTheme.colorScheme.onBackground
                 )
+                if (index == arxivFeed().entries.lastIndex - 5) {
+                    onLoadMoreEntries()
+                }
             }
         }
     }

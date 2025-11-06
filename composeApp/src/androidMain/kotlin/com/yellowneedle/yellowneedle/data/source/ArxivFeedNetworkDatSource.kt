@@ -23,8 +23,8 @@ class ArxivFeedNetworkDatSource @Inject constructor(private val client: ArxivFee
 
     suspend fun searchAllAiMlTitle(
         query: String,
-        start: Int = 0,
-        maxResults: Int = 10
+        start: Int,
+        maxResults: Int
     ): ArxivFeed {
         val categories = listOf("cs.AI", "cs.LG", "cs.MA", "cs.RO", "cs.CV", "cs.CL")
         val categoryQuery = categories.joinToString("+OR+") { "cat:$it" }
@@ -34,8 +34,8 @@ class ArxivFeedNetworkDatSource @Inject constructor(private val client: ArxivFee
 
     suspend fun searchRoboticsTitles(
         query: String,
-        start: Int = 0,
-        maxResults: Int = 10
+        start: Int,
+        maxResults: Int
     ): ArxivFeed {
         val fullQuery = "cat:cs.RO+AND+ti:$query"
         return getArxivFeed(fullQuery, start, maxResults)
@@ -43,32 +43,32 @@ class ArxivFeedNetworkDatSource @Inject constructor(private val client: ArxivFee
 
     suspend fun searchArtificialIntelligenceTitles(
         query: String,
-        start: Int = 0,
-        maxResults: Int = 10
+        start: Int ,
+        maxResults: Int
     ): ArxivFeed {
         val fullQuery = "cat:cs.AI+AND+ti:$query"
         return getArxivFeed(fullQuery, start, maxResults)
     }
     suspend fun searchMachineLearningTitles(
         query: String,
-        start: Int = 0,
-        maxResults: Int = 10
+        start: Int ,
+        maxResults: Int
     ): ArxivFeed {
         val fullQuery = "cat:cs.LG+AND+ti:$query"
         return getArxivFeed(fullQuery, start, maxResults)
     }
     suspend fun searchMultiAgentSystemTitles(
         query: String,
-        start: Int = 0,
-        maxResults: Int = 10
+        start: Int ,
+        maxResults: Int
     ): ArxivFeed {
         val fullQuery = "cat:cs.MA+AND+ti:$query"
         return getArxivFeed(fullQuery, start, maxResults)
     }
     suspend fun searchComputerVisionAndPatternRecognitionTitles(
         query: String,
-        start: Int = 0,
-        maxResults: Int = 10
+        start: Int ,
+        maxResults: Int
     ): ArxivFeed {
         val fullQuery = "cat:cs.CV+AND+ti:$query"
         return getArxivFeed(fullQuery, start, maxResults)
@@ -76,8 +76,8 @@ class ArxivFeedNetworkDatSource @Inject constructor(private val client: ArxivFee
     // this is (NLP) natural language processing
     suspend fun searchNaturalLanguageProcessingTitles(
         query: String,
-        start: Int = 0,
-        maxResults: Int = 10
+        start: Int ,
+        maxResults: Int
     ): ArxivFeed {
         val fullQuery = "cat:cs.CL+AND+ti:$query"
         return getArxivFeed(fullQuery, start, maxResults)
