@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SearchBar
@@ -95,50 +96,60 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
             scope.launch { viewmodel.searchByCategory(selectedCategory, userSearchText, start = 0, maxResults = 50) }
             expanded = false
         },
-        onLoadMoreEntries = { scope.launch {viewmodel.loadNextPage(userSearchText) }},
+        onLoadMoreEntries = { scope.launch { viewmodel.loadNextPage(userSearchText) } },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Search Icon"
             )
         },
-        trailingIcon = { Box {
-            IconButton(onClick = { categoryMenuExpanded = !categoryMenuExpanded }) {
-                Icon(                                            // drowp down
-                    painter = painterResource(selectedCategory.iconRes),
-                    contentDescription = selectedCategory.displayName,
-                    modifier = Modifier.rotate(rotation)
+        trailingIcon = {
+            Box(
+                modifier = Modifier.background(
+                    MaterialTheme.colorScheme.background.copy(alpha = 0.7f),
+                    shape = RoundedCornerShape(206.dp)
                 )
-            }
-
-            DropdownMenu(
-                expanded = categoryMenuExpanded,
-                onDismissRequest = { categoryMenuExpanded = false }
+                    .size(40.dp)
             ) {
-                ArxivCategory.entries.forEach { category ->
-                    DropdownMenuItem(
-                        text = { Text(category.displayName, color = MaterialTheme.colorScheme.onBackground)},
-                        onClick = {
-                            selectedCategory = category
-                            categoryMenuExpanded = false
-                        },
-                        modifier = Modifier
-                            .background(backgroundColor.value)
-                            .pointerInput(Unit) {
-                                detectTapGestures(
-                                    onPress = {
-                                        backgroundColor.value = pressedColor
-                                        tryAwaitRelease()
-                                        backgroundColor.value = defaultColor
-                                    }
-                                )
-                            }
+                IconButton(onClick = { categoryMenuExpanded = !categoryMenuExpanded }) {
+                    Icon(
+                        painter = painterResource(selectedCategory.iconRes),
+                        contentDescription = selectedCategory.displayName,
+                        modifier = Modifier.rotate(rotation)
                     )
                 }
+
+                DropdownMenu(
+                    expanded = categoryMenuExpanded,
+                    onDismissRequest = { categoryMenuExpanded = false }
+                ) {
+                    ArxivCategory.entries.forEach { category ->
+                        DropdownMenuItem(
+                            text = { Text(category.displayName, color = MaterialTheme.colorScheme.onBackground) },
+                            onClick = {
+                                selectedCategory = category
+                                categoryMenuExpanded = false
+                            },
+                            trailingIcon = { category.iconRes },
+
+                            modifier = Modifier
+                                .background(backgroundColor.value)
+                                .pointerInput(Unit) {
+                                    detectTapGestures(
+                                        onPress = {
+                                            backgroundColor.value = pressedColor
+                                            tryAwaitRelease()
+                                            backgroundColor.value = defaultColor
+                                        }
+                                    )
+                                }
+                        )
+                    }
+                }
             }
-        }},
+        },
         placeHolder = { Text("search for research paper") },
-        onclick =  onNavigateTo ,
+        onclick = onNavigateTo,
         expanded = expanded,
     ) { newExpanded -> expanded = newExpanded }
 }
@@ -158,11 +169,15 @@ fun SearchScreenLayout(
     onclick: (Int) -> Unit,
     onExpandedChange: (Boolean) -> Unit
 ) {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(color = MaterialTheme.colorScheme.background)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background)
+    ) {
         CustomSearchBar(
-            modifier = Modifier.width(347.dp).align(Alignment.CenterHorizontally),
+            modifier = Modifier
+                .width(347.dp)
+                .align(Alignment.CenterHorizontally),
             onQueryChange = onQueryChange,
             query = query,
             onSearch = onSearch,
@@ -175,7 +190,7 @@ fun SearchScreenLayout(
         Spacer(Modifier.height(20.dp))
         FeedLazyColumn(
             onclick = onclick,
-            onLoadMoreEntries = onLoadMoreEntries ,
+            onLoadMoreEntries = onLoadMoreEntries,
             arxivFeed = arxivFeed,
         )
     }
@@ -183,15 +198,16 @@ fun SearchScreenLayout(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomSearchBar(modifier: Modifier = Modifier,
-                    onQueryChange: (String) -> Unit,
-                    query: String,
-                    onSearch: (String) -> Unit,
-                    expanded: Boolean,
-                    leadingIcon: @Composable () -> Unit,
-                    placeHolder: @Composable () -> Unit,
-                    trailingIcon: @Composable () -> Unit,
-                    onExpandedChange: (Boolean) -> Unit
+fun CustomSearchBar(
+    modifier: Modifier = Modifier,
+    onQueryChange: (String) -> Unit,
+    query: String,
+    onSearch: (String) -> Unit,
+    expanded: Boolean,
+    leadingIcon: @Composable () -> Unit,
+    placeHolder: @Composable () -> Unit,
+    trailingIcon: @Composable () -> Unit,
+    onExpandedChange: (Boolean) -> Unit
 ) {
     SearchBar(
         modifier = modifier,
@@ -212,7 +228,8 @@ fun CustomSearchBar(modifier: Modifier = Modifier,
                     focusedLeadingIconColor = MaterialTheme.colorScheme.onBackground,
                     unfocusedLeadingIconColor = MaterialTheme.colorScheme.onBackground,
 
-                ))
+                    )
+            )
         },
         expanded = expanded,
         onExpandedChange = onExpandedChange
@@ -223,7 +240,7 @@ fun CustomSearchBar(modifier: Modifier = Modifier,
 fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit, onLoadMoreEntries: () -> Unit) {
     LazyColumn(modifier = Modifier.fillMaxWidth())
     {
-        itemsIndexed(arxivFeed().entries) {index, paper ->
+        itemsIndexed(arxivFeed().entries) { index, paper ->
             val isMarqueeOn = remember { mutableStateOf(false) }
             Box(
                 modifier = Modifier
@@ -260,9 +277,11 @@ fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit, onLoadMor
                         tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
-                Column(modifier = Modifier
-                    .fillMaxHeight()
-                    .offset(x = 84.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .offset(x = 84.dp)
+                ) {
                     Spacer(modifier = Modifier.height(24.dp))
                     SearchScreenText(
                         text = paper.title ?: "title not found",
@@ -378,9 +397,11 @@ fun FeedLazyColumnPreview() {
                         tint = MaterialTheme.colorScheme.onBackground
                     )
 
-                    Column(modifier = Modifier
-                        .fillMaxHeight()
-                        .offset(x = 84.dp)) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .offset(x = 84.dp)
+                    ) {
                         Spacer(modifier = Modifier.height(24.dp))
                         SearchScreenText(
                             text = entries.title ?: "title not found",

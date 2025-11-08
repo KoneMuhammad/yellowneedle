@@ -21,20 +21,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun testing(){
-    var changeableValue by remember { mutableStateOf(false) }
-
-    Box(modifier = Modifier.fillMaxSize().clickable { changeableValue = !changeableValue }) {
-        Text("THIS IS BRAIN NUERONS", modifier = Modifier.align(Alignment.TopCenter))
-        if(!changeableValue) {
-            Icon(
-                imageVector = Icons.Default.Tv,
-                contentDescription = "",
-                modifier = Modifier.size(100.dp).align(Alignment.TopCenter)
-            )
-
-        }
-    }
+fun LaptopText(){
+    Text("Source Code")
 }
-
-
