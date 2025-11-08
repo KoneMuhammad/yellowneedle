@@ -7,6 +7,9 @@ import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.Interaction
+import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,6 +53,8 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -79,11 +84,7 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
 
     val rotation by animateFloatAsState(if (categoryMenuExpanded) 180f else 0f)
 
-    val backgroundColor = remember { mutableStateOf(Color.Transparent) }
-
-
-    val pressedColor = MaterialTheme.colorScheme.onTertiary.copy(alpha = 0.12f)
-    val defaultColor = Color.Transparent
+    val isPressed by interactionSource.collectIsPressedAsState()
 
     val scope = rememberCoroutineScope()
 
@@ -121,7 +122,7 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
 
                 DropdownMenu(
                     expanded = categoryMenuExpanded,
-                    onDismissRequest = { categoryMenuExpanded = false }
+                    onDismissRequest = { categoryMenuExpanded = false },
                 ) {
                     ArxivCategory.entries.forEach { category ->
                         DropdownMenuItem(
@@ -129,20 +130,10 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
                             onClick = {
                                 selectedCategory = category
                                 categoryMenuExpanded = false
+
                             },
                             trailingIcon = { category.iconRes },
-
-                            modifier = Modifier
-                                .background(backgroundColor.value)
-                                .pointerInput(Unit) {
-                                    detectTapGestures(
-                                        onPress = {
-                                            backgroundColor.value = pressedColor
-                                            tryAwaitRelease()
-                                            backgroundColor.value = defaultColor
-                                        }
-                                    )
-                                }
+                            interactionSource =
                         )
                     }
                 }
