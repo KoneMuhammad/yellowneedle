@@ -10,7 +10,8 @@ val blackText = Color(0x141414).copy(alpha = 1f)
 
 val grayText  = Color(0x888A8C).copy(alpha = 1f)
 
-
+val GrayElementForBlack = Color(0xD2D2D2).copy(alpha = 1f)
+val GrayElementForWhite = Color(0x3B3B3B).copy(alpha = 1f)
 val strokeWhite = Color(0xDBE6FF).copy(alpha = 1f)
 val strokeBlack = Color(0x607594).copy(alpha = 1f)
 

@@ -10,6 +10,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -84,6 +85,7 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
 
     val rotation by animateFloatAsState(if (categoryMenuExpanded) 180f else 0f)
 
+    val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
 
     val scope = rememberCoroutineScope()
@@ -119,11 +121,11 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
                         modifier = Modifier.rotate(rotation)
                     )
                 }
-
                 DropdownMenu(
                     expanded = categoryMenuExpanded,
                     onDismissRequest = { categoryMenuExpanded = false },
                 ) {
+
                     ArxivCategory.entries.forEach { category ->
                         DropdownMenuItem(
                             text = { Text(category.displayName, color = MaterialTheme.colorScheme.onBackground) },
@@ -132,8 +134,8 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
                                 categoryMenuExpanded = false
 
                             },
-                            trailingIcon = { category.iconRes },
-                            interactionSource =
+                            trailingIcon = { Icon(painter = painterResource(category.iconRes), contentDescription = "") },
+                            interactionSource = interactionSource,
                         )
                     }
                 }

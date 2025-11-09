@@ -13,7 +13,8 @@ private val DarkColorScheme = darkColorScheme(
     background = offBlack,
     onBackground = whiteText,
     onSecondary = grayText,
-    onTertiary = strokeBlack
+    onTertiary = strokeBlack,
+    primary = GrayElementForBlack,
 
 )
 
@@ -22,7 +23,8 @@ private val LightColorScheme = lightColorScheme(
     onBackground = blackText,
     onSecondary = grayText,
     onTertiary = strokeWhite,
-onSurface = bigCardShadow
+onSurface = bigCardShadow,
+    primary = GrayElementForWhite,
 )
 
 @Composable
