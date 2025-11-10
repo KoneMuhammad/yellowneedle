@@ -141,6 +141,7 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
         placeHolder = { Text("search for research paper") },
         onclick = onNavigateTo,
         expanded = expanded,
+        AIIcon = selectedCategory.iconRes
     ) { newExpanded -> expanded = newExpanded }
 }
 
@@ -157,6 +158,7 @@ fun SearchScreenLayout(
     trailingIcon: @Composable () -> Unit,
     placeHolder: @Composable () -> Unit,
     onclick: (Int) -> Unit,
+    AIIcon: Int,
     onExpandedChange: (Boolean) -> Unit
 ) {
     Column(
@@ -182,6 +184,7 @@ fun SearchScreenLayout(
             onclick = onclick,
             onLoadMoreEntries = onLoadMoreEntries,
             arxivFeed = arxivFeed,
+            AIIcon = AIIcon
         )
     }
 }
@@ -227,7 +230,7 @@ fun CustomSearchBar(
 }
 
 @Composable
-fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit, onLoadMoreEntries: () -> Unit) {
+fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit, onLoadMoreEntries: () -> Unit, AIIcon: Int) {
     LazyColumn(modifier = Modifier.fillMaxWidth())
     {
         itemsIndexed(arxivFeed().entries) { index, paper ->
@@ -263,7 +266,7 @@ fun FeedLazyColumn(arxivFeed: () -> ArxivFeed, onclick: (Int) -> Unit, onLoadMor
                             )
                             .align(Alignment.CenterStart)
                             .offset(x = 24.dp),
-                        painter = painterResource(R.drawable.precision_manufacturing_24px), contentDescription = "",
+                        painter = painterResource(AIIcon), contentDescription = "",
                         tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
