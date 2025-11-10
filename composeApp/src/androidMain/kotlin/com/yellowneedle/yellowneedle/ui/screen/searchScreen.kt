@@ -125,9 +125,11 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
                     expanded = categoryMenuExpanded,
                     onDismissRequest = { categoryMenuExpanded = false },
                 ) {
-
                     ArxivCategory.entries.forEach { category ->
-                        DropdownMenuItem(
+                        // i want to create a shade for any item clicked
+                        //condition if thing is clicked
+
+                        DropdownMenuItem(modifier = Modifier.background(color = if() MaterialTheme.colorScheme.background.copy(alpha = 0.7f)),
                             text = { Text(category.displayName, color = MaterialTheme.colorScheme.onBackground) },
                             onClick = {
                                 selectedCategory = category
