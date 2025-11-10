@@ -85,9 +85,6 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
 
     val rotation by animateFloatAsState(if (categoryMenuExpanded) 180f else 0f)
 
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-
     val scope = rememberCoroutineScope()
 
 
@@ -126,10 +123,8 @@ fun SearchScreenRoute(viewmodel: SearchViewModel = hiltViewModel(), onNavigateTo
                     onDismissRequest = { categoryMenuExpanded = false },
                 ) {
                     ArxivCategory.entries.forEach { category ->
-                        // i want to create a shade for any item clicked
-                        //condition if thing is clicked
-
-                        DropdownMenuItem(modifier = Modifier.background(color = if() MaterialTheme.colorScheme.background.copy(alpha = 0.7f)),
+                        val interactionSource = remember { MutableInteractionSource() }
+                        DropdownMenuItem(modifier = Modifier.background(color =if(interactionSource.collectIsPressedAsState().value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background,),
                             text = { Text(category.displayName, color = MaterialTheme.colorScheme.onBackground) },
                             onClick = {
                                 selectedCategory = category
