@@ -1,14 +1,15 @@
-# Yellow Needle
-
+Yellow Needle
 ---
 
-**Mobile App for Discovering AI & ML Research Papers Ahead of the Curve**
+## concise summaries of the latest ML research on the commute
 
 ![Yellow Needle App Screenshot](assets/yellow_needle.png)
 
+
 ---
-## 
-Get concise summaries of the latest research while commuting or casually browsing, so you can quickly identify relevant insights without wading through long, irrelevant papers.
+##  Acknowledgements
+**Thank you to arXiv for use of its open access interoperability**
+
 ---
 
 ##  Features
@@ -29,7 +30,6 @@ Get concise summaries of the latest research while commuting or casually browsin
 - Dependency Injection with Dagger
 
 ---
-
 ## 🧭 Getting Started
 
 ### 1. Clone the repository
